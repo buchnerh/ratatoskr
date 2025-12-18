@@ -42,7 +42,7 @@ The primary objective of Sprint 001 is to establish a working foundation for Rat
 
 ### 5. Testing & Verification
 - [ ] Build successfully with `clickable build`
-- [ ] Deploy to device/emulator with `clickable install`
+- [ ] Run app in desktop emulator with `clickable desktop`
 - [ ] Verify app launches without crashes
 - [ ] Basic smoke test: UI appears correctly
 
@@ -122,7 +122,7 @@ The following are explicitly **not** included in Sprint 001:
 Sprint 001 is considered successful when:
 
 1. ✅ Code builds without errors using `clickable build`
-2. ✅ App installs on Ubuntu Touch 20.04 device/emulator
+2. ✅ App runs in desktop emulator using `clickable desktop`
 3. ✅ App launches and displays main UI
 4. ✅ All source files have proper headers with version information
 5. ✅ Documentation clearly describes architecture and components
