@@ -1,0 +1,15 @@
+{
+    "name": "ratatoskr.philipa",
+    "description": "Bluetooth File Transfer",
+    "architecture": "@CLICK_ARCH@",
+    "title": "Ratatoskr",
+    "hooks": {
+        "ratatoskr": {
+            "apparmor": "ratatoskr.apparmor",
+            "desktop":  "ratatoskr.desktop"
+        }
+    },
+    "version": "@BUILD_VERSION@",
+    "maintainer": "Philippe Andersson <philippe.andersson@skynet.be>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}

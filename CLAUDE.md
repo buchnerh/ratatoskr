@@ -1,9 +1,10 @@
 # Tech Stack
 
-- Language: 
-- Build tool: 
-- Testing: behave (BDD)
+- Language: C++
 - Libraries: 
+- Build tool: 
+- Emulator: clickable-ut 8.3.1 + docker 28.5.1
+- Testing: behave (BDD)
 
 # Project Structure
 
