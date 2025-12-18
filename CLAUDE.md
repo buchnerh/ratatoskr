@@ -32,6 +32,8 @@ container managed by 'clickable'
 
 ## ADR Index
 
+- [ADR-001: Bluetooth File Transfer Architecture Strategy](docs/ADR-001-bluetooth-architecture-strategy.md) - 2025-12-18
+
 # Versioning Strategy
 
 - use git
