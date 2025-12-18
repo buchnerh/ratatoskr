@@ -1,12 +1,17 @@
 {
     "name": "ratatoskr.philipa",
-    "description": "Bluetooth File Transfer",
+    "description": "Bluetooth file transfer app for Ubuntu Touch, with focus on sending contacts (VCF) to car kits. Based on ubtd by Michael Zanetti and Ian L.",
     "architecture": "@CLICK_ARCH@",
     "title": "Ratatoskr",
     "hooks": {
         "ratatoskr": {
             "apparmor": "ratatoskr.apparmor",
             "desktop":  "ratatoskr.desktop"
+        },
+        "shareplugin": {
+            "apparmor": "shareplugin.apparmor",
+            "desktop": "shareplugin.desktop",
+            "content-hub": "bluetooth-contenthub.json"
         }
     },
     "version": "@BUILD_VERSION@",

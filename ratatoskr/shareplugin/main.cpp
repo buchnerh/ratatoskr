@@ -1,14 +1,14 @@
 /*==========================================================
- * Program : main.cpp                    Project : ratatoskr
- * Author  : Philippe Andersson + Copilot CLI.
+ * Program : main.cpp              Project : ratatoskr
+ * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2025-12-18
  * Version : 0.0.1
- * Notice  : (c) Les Ateliers du Heron, 2025
+ * Notice  : (c) Original work by Michael Zanetti, Canonical
+ *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
- * Comment : Main application entry point.
- *           Based on ubtd by Michael Zanetti and Ian L.
+ * Comment : ContentHub shareplugin entry point
  * Modification History:
- * - 2025-12-18 (0.0.1) : Initial adaptation from ubtd-20.04.
+ * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
  *========================================================*/
 
 #include <QGuiApplication>
@@ -17,23 +17,20 @@
 #include <QQmlContext>
 
 #include "adapter.h"
-#include "obexd.h"
+#include "bttransfer.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    app.setApplicationName("ratatoskr.philipa");
 
-    Adapter adapter;
-    Obexd obexd;
+    qmlRegisterType<BtTransfer>("Shareplugin", 0, 1, "BtTransfer");
 
     QQuickView view;
-
-    view.rootContext()->setContextProperty("obexd", &obexd);
-    qmlRegisterUncreatableType<Transfer>("Ratatoskr", 1, 0, "Transfer", "get them from obexd");
+    QObject::connect(view.engine(), &QQmlEngine::quit, &app, &QCoreApplication::quit);
 
     view.setSource(QUrl(QStringLiteral("qrc:///Main.qml")));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
     return app.exec();
 }
+

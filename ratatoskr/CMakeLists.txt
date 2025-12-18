@@ -8,6 +8,8 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
 find_package(Qt5QuickControls2 REQUIRED)
+find_package(Qt5DBus REQUIRED)
+find_package(Qt5Bluetooth REQUIRED)
 
 execute_process(
     COMMAND dpkg-architecture -qDEB_HOST_MULTIARCH
@@ -66,11 +68,39 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/manifest.json DESTINATION ${CMAKE_INST
 install(FILES ${PROJECT_NAME}.apparmor DESTINATION ${DATA_DIR})
 install(FILES assets/logo.svg DESTINATION assets)
 
-qt5_add_resources(QT_RESOURCES qml/qml.qrc)
-qt5_add_resources(QT_RESOURCES assets/assets.qrc)
-add_executable(${PROJECT_NAME} main.cpp ${QT_RESOURCES})
+# Main application sources
+set(MAIN_APP_SOURCES
+    main.cpp
+    adapter.cpp
+    obexd.cpp
+    obexagent.cpp
+    obexagentadaptor.cpp
+    transfer.cpp
+)
+
+set(MAIN_APP_HEADERS
+    adapter.h
+    obexd.h
+    obexagent.h
+    obexagentadaptor.h
+    transfer.h
+)
+
+# Main application resources
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Main.qml ${CMAKE_CURRENT_BINARY_DIR}/Main.qml COPYONLY)
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/app.qrc
+"<RCC>
+    <qresource prefix=\"/\">
+        <file>Main.qml</file>
+    </qresource>
+</RCC>")
+
+qt5_add_resources(MAIN_APP_QT_RESOURCES ${CMAKE_CURRENT_BINARY_DIR}/app.qrc)
+qt5_add_resources(MAIN_APP_QT_RESOURCES assets/assets.qrc)
+
+add_executable(${PROJECT_NAME} ${MAIN_APP_SOURCES} ${MAIN_APP_HEADERS} ${MAIN_APP_QT_RESOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
-target_link_libraries(${PROJECT_NAME} Qt5::Gui Qt5::Qml Qt5::Quick Qt5::QuickControls2)
+target_link_libraries(${PROJECT_NAME} Qt5::Gui Qt5::Qml Qt5::Quick Qt5::QuickControls2 Qt5::DBus Qt5::Bluetooth)
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 # Translations
@@ -96,6 +126,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DESKTOP_FILE_NAME} DESTINATION ${DAT
 
 add_subdirectory(po)
 add_subdirectory(plugins)
+add_subdirectory(shareplugin)
 
 # Make source files visible in qtcreator
 file(GLOB_RECURSE PROJECT_SRC_FILES
