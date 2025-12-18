@@ -1,0 +1,41 @@
+# Tech Stack
+
+- Language: 
+- Build tool: 
+- Testing: behave (BDD)
+- Libraries: 
+
+# Project Structure
+
+- `docs/`: technical and project management documentation
+- `templates/`: source files templates
+
+# Code Style
+
+- tab value = 2 spaces
+- use source file header from `templates/` folder
+- update last modification date and version history in header each time a 
+  source file is modified
+
+# Project management
+
+- use ADR
+- store each ADR in the `docs/` folder 
+- keep an index of existing ADR in this file
+- work in sprint
+- we'll discuss the scope of each sprint before it begins
+
+## ADR Index
+
+# Versioning Strategy
+
+- use git
+- project is a local repository
+- use semantic versioning
+- during project inception, target version is called 0.0.1
+- development for each sprint will occur in a branch called `sprint-XXX` where 
+  `XXX` represents the sprint sequence number
+- DO NOT merge in `master` branch -- I will take care of it at the end of each
+  sprint
+  
+
