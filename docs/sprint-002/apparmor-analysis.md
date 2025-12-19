@@ -8,6 +8,7 @@
 ## Problem Summary
 
 The clickable automated review process fails with:
+
 ```
 - security:template_valid:ratatoskr.apparmor
     (NEEDS REVIEW) 'unconfined' not allowed
@@ -103,6 +104,7 @@ We inherited the `unconfined` AppArmor template from Ian L.'s ubtd-20.04:
 ### ❌ Option 3: Keep "unconfined" (Development Only)
 
 **Assessment:**
+
 - ✅ **No code changes** 
 - ❌ **Cannot publish** - blocks OpenStore entirely
 - ❌ **Security risk** - unacceptable for any release
@@ -199,6 +201,7 @@ If denials occur, document them for potential custom profile work in future spri
 
 ### Future Security Hardening (Optional)
 If we pursue maximum security in Sprint 003+:
+
 1. Profile the app's actual D-Bus calls
 2. Create minimal custom AppArmor profile
 3. Test in complain mode first

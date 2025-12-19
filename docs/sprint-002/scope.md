@@ -8,6 +8,7 @@
 ## Sprint Objectives
 
 The primary objectives of Sprint 002 are to:
+
 1. **Fix critical AppArmor security issue** blocking OpenStore publication
 2. **Test on real Ubuntu Touch hardware** to validate functionality
 3. **Document baseline functionality** before adding new features
@@ -127,10 +128,12 @@ Sprint 002 is considered successful when:
 **Estimated Effort:** 30 minutes
 
 **Files to modify:**
+
 - `ratatoskr/ratatoskr.apparmor`
 - `ratatoskr/shareplugin/shareplugin.apparmor`
 
 **Changes:**
+
 ```json
 {
     "policy_groups": [
@@ -144,6 +147,7 @@ Sprint 002 is considered successful when:
 ```
 
 **Validation:**
+
 ```bash
 cd ratatoskr/
 clickable build
@@ -154,11 +158,13 @@ clickable build
 **Estimated Effort:** 1-2 hours (including setup)
 
 **Prerequisites:**
+
 - Ubuntu Touch 20.04 device available
 - Device connected via USB or network
 - Developer mode enabled on device
 
 **Steps:**
+
 ```bash
 cd ratatoskr/
 clickable install  # Install to connected device
@@ -166,6 +172,7 @@ clickable logs     # Monitor logs during testing
 ```
 
 **Testing:**
+
 1. Launch app from device
 2. Check Bluetooth settings
 3. Attempt file receive from PC
@@ -176,11 +183,13 @@ clickable logs     # Monitor logs during testing
 **Estimated Effort:** 1-2 hours
 
 **Documents to create:**
+
 - `docs/ADR-002-apparmor-bluetooth-policy.md`
 - `docs/sprint-002/testing-report.md`
 - `docs/sprint-002/completion-summary.md`
 
 **Documents to update:**
+
 - `docs/architecture.md` - Add AppArmor policy section
 - `ratatoskr/README.md` - Update with testing status
 
@@ -190,6 +199,7 @@ clickable logs     # Monitor logs during testing
 **Probability:** Low  
 **Impact:** High  
 **Mitigation:** 
+
 - "bluetooth" is standard policy for BT apps
 - Can monitor logs for denials
 - Fallback: Create custom profile in Sprint 003
@@ -198,6 +208,7 @@ clickable logs     # Monitor logs during testing
 **Probability:** Medium  
 **Impact:** High  
 **Mitigation:**
+
 - Test on multiple devices if possible
 - Document device-specific quirks
 - Engage UBports community if needed
@@ -206,6 +217,7 @@ clickable logs     # Monitor logs during testing
 **Probability:** Low  
 **Impact:** High  
 **Mitigation:**
+
 - Verify bluez-obexd service status
 - Check system configuration
 - Document service dependencies
@@ -214,6 +226,7 @@ clickable logs     # Monitor logs during testing
 **Probability:** Low (assuming you have device)  
 **Impact:** High  
 **Mitigation:**
+
 - Continue with emulator testing
 - Plan hardware testing for Sprint 003
 - Focus on AppArmor fix only
@@ -246,6 +259,7 @@ clickable logs     # Monitor logs during testing
 ## Definition of Done
 
 Each deliverable is considered "done" when:
+
 - Code changes committed with proper headers
 - Build completes successfully
 - Functionality verified (on hardware if applicable)
@@ -255,6 +269,7 @@ Each deliverable is considered "done" when:
 ## Sprint Review Preparation
 
 At sprint completion, prepare to demonstrate:
+
 1. Clean build without AppArmor errors
 2. App running on real hardware (video/screenshots)
 3. Successful file transfer (receive and send)
@@ -264,6 +279,7 @@ At sprint completion, prepare to demonstrate:
 ## Next Sprint Preview
 
 Based on Sprint 002 results, Sprint 003 may focus on:
+
 - Fixing any critical bugs discovered
 - Contacts API integration
 - VCF export implementation
