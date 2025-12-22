@@ -59,7 +59,9 @@
 - initiating search for nearby bluetooth devices on phone doesn't detect 
   laptop
   
-(this problem most likely has nothing to do with 'ratatoskr').
+(this problem may not have anything to do with 'ratatoskr' -- unless it's the 
+symptom of a lacking BT "file transfer" profile that should be provided by
+'ratatoskr').
 
 ## Try using the SharePlugin to push Contact card to phone
 
