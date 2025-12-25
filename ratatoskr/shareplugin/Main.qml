@@ -37,13 +37,10 @@ MainView {
         target: Qt.application
         onAboutToQuit: {
             console.log("SharePlugin: Cleaning up before quit")
-            scheduleRestart.stop()
             btModel.running = false
             btModel.continuousDiscovery = false
         }
     }
-
-    Timer { id: scheduleRestart; interval: 1000; onTriggered: btModel.running = true; }
 
     BluetoothDiscoveryModel {
         id: btModel
@@ -56,13 +53,19 @@ MainView {
             }
         }
 
-        // Workaround for width not being set when we start the animation
-        Component.onCompleted: scheduleRestart.start()
         running: false
+
+        Component.onCompleted: {
+            Qt.callLater(function() {
+                running = true
+            })
+        }
 
         onRunningChanged: {
             if (!running && continuousDiscovery) {
-                scheduleRestart.start()
+                Qt.callLater(function() {
+                    running = true
+                })
             }
         }
 
