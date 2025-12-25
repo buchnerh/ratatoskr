@@ -88,12 +88,14 @@ dbus-send --system --print-reply \
 ## Success Criteria
 
 ✅ **Sprint Succeeds If:**
+
 - Understand why Sprint #003 failed
 - Know how to implement working solution
 - Can confidently plan Sprint #005
 - Have clear architectural decision
 
 ❌ **Sprint Fails If:**
+
 - Still unclear why things don't work
 - No viable approach identified
 - Same assumptions remain
@@ -168,6 +170,7 @@ dbus-send --system --print-reply \
 ## Decision Framework
 
 For each approach, evaluate:
+
 - ✅ Feasibility (can we do it?)
 - ✅ Complexity (how hard?)
 - ✅ Limitations (what can't it do?)

@@ -68,6 +68,7 @@ Sprint #003 testing revealed two fundamental issues:
 **Activities:**
 
 1. **Check Package Installation**
+
    ```bash
    # On device
    dpkg -l | grep -i obex
@@ -78,6 +79,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Note dependencies
 
 2. **Check Service Status**
+
    ```bash
    systemctl list-units | grep obex
    systemctl status obexd
@@ -89,6 +91,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Identify why service not available
 
 3. **Research Service Configuration**
+
    ```bash
    find /etc /usr -name "*obex*" 2>/dev/null
    cat /usr/share/dbus-1/services/*obex*
@@ -99,6 +102,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Document startup requirements
 
 4. **Test Service Startup**
+
    ```bash
    # If obexd binary exists
    which obexd
@@ -111,6 +115,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Check if AppArmor blocks it
 
 **Deliverables:**
+
 - `obex-investigation.md` - Complete findings report
 - Decision: Is obexd viable for our use case?
 
@@ -125,6 +130,7 @@ Sprint #003 testing revealed two fundamental issues:
 **Activities:**
 
 1. **Examine Our Installation**
+
    ```bash
    # On device
    ls -la /opt/click.ubuntu.com/ratatoskr.philipa/current/
@@ -137,6 +143,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Compare with manifest
 
 2. **Test Direct Binary Execution**
+
    ```bash
    # On device
    /opt/click.ubuntu.com/ratatoskr.philipa/current/shareplugin
@@ -148,11 +155,13 @@ Sprint #003 testing revealed two fundamental issues:
 3. **Study Working ContentHub Apps**
    
    **Candidates to analyze:**
+   
    - Dekko2 (email client - has share capability)
    - uNav (navigation - imports/shares locations)
    - Any app with working ContentHub integration
    
    **What to examine:**
+   
    ```bash
    # For each app
    ls -la /opt/click.ubuntu.com/[app-name]/current/
@@ -173,6 +182,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Community forum discussions
 
 5. **Debug ContentHub Invocation**
+
    ```bash
    # Monitor during SharePlugin invocation
    journalctl -f | grep -i content
@@ -183,6 +193,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Document execution path
 
 **Deliverables:**
+
 - `contenthub-analysis.md` - Architecture findings
 - `working-examples.md` - Analysis of successful apps
 - Decision: Correct plugin implementation pattern
@@ -206,11 +217,13 @@ Sprint #003 testing revealed two fundamental issues:
 2. **OpenStore Bluetooth Apps**
    
    **Search for:**
+   
    - Bluetooth file transfer apps
    - Apps that receive/send files over Bluetooth
    - Working implementations
    
    **Analyze:**
+   
    - What approach do they use?
    - OBEX, QtBluetooth, or other?
    - Any workarounds for platform limitations?
@@ -227,6 +240,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Device compatibility implications
 
 **Deliverables:**
+
 - `bluetooth-alternatives.md` - Options analysis
 - `feasibility-matrix.md` - Compare approaches
 - Recommendation for implementation approach
@@ -266,6 +280,7 @@ Sprint #003 testing revealed two fundamental issues:
    - Identify what breaks
 
 **Deliverables:**
+
 - Test results documented
 - Proof-of-concept code (if successful)
 - Photos/screenshots of testing
@@ -373,6 +388,7 @@ Sprint #003 testing revealed two fundamental issues:
 **Total Estimated Time:** 20-28 hours
 
 **Suggested Breakdown:**
+
 - Week 1: Tasks 1 & 2 (OBEX + ContentHub investigation)
 - Week 2: Tasks 3 & 4 (Alternatives + Testing)
 - Week 3: Analysis, decision, documentation
@@ -428,6 +444,7 @@ Sprint #003 testing revealed two fundamental issues:
 ## Out of Scope
 
 **This sprint does NOT include:**
+
 - ❌ Writing production code
 - ❌ Fixing existing bugs
 - ❌ Adding new features
@@ -471,12 +488,14 @@ Sprint #003 testing revealed two fundamental issues:
 ### Success Definition
 
 **This sprint succeeds if:**
+
 - We understand WHY Sprint #003 approach failed
 - We know HOW to implement file transfer that works
 - We can confidently plan Sprint #005 implementation
 - We avoid repeating similar mistakes
 
 **This sprint fails if:**
+
 - Still unclear why things don't work
 - No viable path forward identified
 - More questions than answers remain
@@ -487,6 +506,7 @@ Sprint #003 testing revealed two fundamental issues:
 ### If Research Succeeds
 
 **Sprint #005 Planning:**
+
 1. Implement chosen approach
 2. Create working prototype
 3. Test on device
@@ -496,6 +516,7 @@ Sprint #003 testing revealed two fundamental issues:
 ### If Research Reveals Blockers
 
 **Options:**
+
 1. Pivot to different approach (e.g., QtBluetooth-only)
 2. Reduce scope (send-only, no receive)
 3. Consider alternative platforms
@@ -504,6 +525,7 @@ Sprint #003 testing revealed two fundamental issues:
 ### If Multiple Approaches Viable
 
 **Prototype Sprint:**
+
 1. Implement multiple minimal prototypes
 2. Compare on device
 3. Choose best based on results
