@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import QtQuick.Window 2.2
 import QtQuick.Layouts 1.1
 import Lomiri.Components 1.3
 import QtBluetooth 5.4
@@ -8,6 +9,7 @@ import Lomiri.Content 1.3
 MainView {
     id: root
     applicationName: "ubtd-20.04.fourloop2002"
+    anchorToKeyboard: true
 
     width: units.gu(100)
     height: units.gu(75)
