@@ -90,10 +90,12 @@ Research completed 2025-12-25. See `docs/sprint-003/research-findings.md` for fu
 **Complexity:** Trivial
 
 **Changes:**
+
 - Edit `ratatoskr/shareplugin/shareplugin.desktop`
 - Change `Icon=assets/logo.svg` to `Icon=ratatoskr`
 
 **Testing:**
+
 - Rebuild and install on device
 - Open Contacts → Share contact
 - Verify icon displays in share menu
@@ -111,6 +113,7 @@ Research completed 2025-12-25. See `docs/sprint-003/research-findings.md` for fu
 **Changes:**
 
 In `ratatoskr/obexd.cpp`:
+
 ```cpp
 // Line 22: Change from sessionBus() to systemBus()
 Obexd::Obexd(QObject *parent) :
@@ -121,6 +124,7 @@ Obexd::Obexd(QObject *parent) :
 ```
 
 **Testing:**
+
 - Build and deploy to device
 - Launch main app
 - Check logs for successful agent registration (no AccessDenied error)
@@ -128,6 +132,7 @@ Obexd::Obexd(QObject *parent) :
 - Monitor for AppArmor denials
 
 **Success Criteria:**
+
 - No `org.freedesktop.DBus.Error.AccessDenied` in logs
 - OBEX agent registers successfully
 - File receiving works
@@ -145,6 +150,7 @@ Obexd::Obexd(QObject *parent) :
 **Sub-task 3.1: Add Proper Cleanup**
 
 In `ratatoskr/shareplugin/Main.qml`, add:
+
 ```qml
 Connections {
     target: Qt.application
@@ -159,6 +165,7 @@ Connections {
 **Sub-task 3.2: Add BtTransfer Destructor**
 
 Create new file `ratatoskr/shareplugin/bttransfer.cpp` additions:
+
 ```cpp
 BtTransfer::~BtTransfer()
 {
@@ -172,6 +179,7 @@ BtTransfer::~BtTransfer()
 ```
 
 Update `bttransfer.h` to declare destructor:
+
 ```cpp
 ~BtTransfer();
 ```
@@ -179,12 +187,14 @@ Update `bttransfer.h` to declare destructor:
 **Sub-task 3.3: Remove Problematic Timer Pattern**
 
 In `Main.qml`, replace:
+
 ```qml
 Timer { id: scheduleRestart; interval: 1000; onTriggered: btModel.running = true; }
 Component.onCompleted: scheduleRestart.start()
 ```
 
 With safer initialization:
+
 ```qml
 BluetoothDiscoveryModel {
     id: btModel
@@ -201,6 +211,7 @@ BluetoothDiscoveryModel {
 **Sub-task 3.4: Switch to QQmlApplicationEngine**
 
 In `ratatoskr/shareplugin/main.cpp`:
+
 ```cpp
 int main(int argc, char *argv[])
 {
@@ -222,6 +233,7 @@ int main(int argc, char *argv[])
 ```
 
 In `Main.qml`, change root element:
+
 ```qml
 // Change from MainView to Window
 import QtQuick.Window 2.2
@@ -234,6 +246,7 @@ Window {
 ```
 
 **Testing:**
+
 - Build and deploy to device
 - Open Contacts app
 - Test share invocation
@@ -244,6 +257,7 @@ Window {
 - Verify no system crashes
 
 **Success Criteria:**
+
 - No `QObject::~QObject: Timers cannot be stopped` errors
 - No system crashes or reboots
 - SharePlugin cleanly exits when dismissed
@@ -270,6 +284,7 @@ Window {
 Only proceed if Phase 1 confirms app-specific issue.
 
 Add to `obexd.cpp`:
+
 ```cpp
 void Obexd::registerOBEXServer()
 {
@@ -298,11 +313,13 @@ void Obexd::registerOBEXServer()
 ```
 
 **Testing:**
+
 - If implemented, test discoverability with server registered
 - Verify remote devices can see file transfer capability
 - Test file transfer initiation from remote device
 
 **Success Criteria:**
+
 - Understanding of whether issue is app-specific or system-level
 - If app-specific and fixable: working discoverability
 - If system-level: documented limitation
@@ -312,6 +329,7 @@ void Obexd::registerOBEXServer()
 ## Implementation Timeline
 
 **Week 1:**
+
 - Day 1: Task 1 (Icon fix) + Task 2 (AppArmor fix) + Test on device
 - Day 2-3: Task 3.1-3.2 (Cleanup + Destructor) + Test
 - Day 4-5: Task 3.3-3.4 (Engine refactor) + Comprehensive testing
@@ -343,6 +361,7 @@ void Obexd::registerOBEXServer()
 ### Test Scenarios
 
 **Main App:**
+
 1. App startup
 2. Bluetooth adapter detection
 3. Device discovery
@@ -350,6 +369,7 @@ void Obexd::registerOBEXServer()
 5. Log verification (no AppArmor denials)
 
 **SharePlugin:**
+
 1. Invocation from Contacts app
 2. Cancel before selection
 3. Select device and transfer
@@ -357,6 +377,7 @@ void Obexd::registerOBEXServer()
 5. System stability after operations
 
 **Integration:**
+
 1. Main app running + SharePlugin invocation
 2. File transfer end-to-end
 3. Multiple file types (VCF primary focus)
@@ -407,6 +428,7 @@ void Obexd::registerOBEXServer()
 ### Rollback Plan
 
 Each task committed separately to git:
+
 - **Task 1 (Icon)**: Revert single file if needed
 - **Task 2 (AppArmor)**: Revert to sessionBus() if systemBus() fails
 - **Task 3 (SharePlugin)**: Revert in stages - destructor, cleanup, engine

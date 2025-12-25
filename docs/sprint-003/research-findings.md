@@ -28,6 +28,7 @@ QDBusError("org.freedesktop.DBus.Error.AccessDenied",
 ### Analysis
 
 **Current Configuration:**
+
 ```json
 {
     "policy_groups": ["bluetooth", "networking", "content_exchange_source"],
@@ -36,12 +37,15 @@ QDBusError("org.freedesktop.DBus.Error.AccessDenied",
 ```
 
 **What We Expected:**
+
 The `bluetooth` policy group should grant:
+
 - D-Bus access to `org.bluez`
 - D-Bus access to `org.bluez.obex`
 - Bluetooth device operations
 
 **What We Observed:**
+
 - Main app starts successfully
 - Bluetooth adapter detected
 - Device discovery works
@@ -50,6 +54,7 @@ The `bluetooth` policy group should grant:
 ### Root Cause Investigation
 
 The logs show the denial occurs when calling:
+
 ```cpp
 QDBusReply<void> reply = m_manager.call("RegisterAgent", 
     qVariantFromValue(QDBusObjectPath(DBUS_ADAPTER_AGENT_PATH)));
@@ -62,16 +67,19 @@ This is attempting to register with `org.bluez.obex.AgentManager1` interface on 
 ### Research into Ubuntu Touch Bluetooth Apps
 
 Looking at the architecture:
+
 - **BlueZ** (system bus): org.bluez - device management, pairing, discovery
 - **OBEX daemon** (session/system bus): org.bluez.obex - file transfer operations
 
 The policy group `bluetooth` grants:
+
 ```
 # From Ubuntu Touch AppArmor abstractions
 dbus (send, receive) bus=system path=/org/bluez{,/**},
 ```
 
 But our code uses:
+
 ```cpp
 m_dbus(QDBusConnection::sessionBus())  // Session bus, not system!
 ```
@@ -81,6 +89,7 @@ m_dbus(QDBusConnection::sessionBus())  // Session bus, not system!
 #### Option A: Switch OBEX to System Bus (Preferred)
 
 **Change:**
+
 ```cpp
 // In obexd.cpp
 Obexd::Obexd(QObject *parent) :
@@ -91,6 +100,7 @@ Obexd::Obexd(QObject *parent) :
 ```
 
 **Rationale:**
+
 - OBEX daemon typically runs on system bus in production
 - `bluetooth` policy group already grants system bus access
 - No AppArmor changes needed
@@ -103,6 +113,7 @@ Obexd::Obexd(QObject *parent) :
 **Alternative approach** (if system bus doesn't work):
 
 Create custom AppArmor rule:
+
 ```
 # Custom snippet (would need click review approval)
 dbus (send, receive) bus=session peer=(label=unconfined),
@@ -129,6 +140,7 @@ dbus (send, receive) bus=session peer=(label=unconfined),
 ### Problem Statement
 
 Phone instantly reboots when SharePlugin is invoked from Contacts app:
+
 - Pop-up dialog flashes briefly
 - System crashes immediately
 - Log shows: `QObject::~QObject: Timers cannot be stopped from another thread`
@@ -137,6 +149,7 @@ Phone instantly reboots when SharePlugin is invoked from Contacts app:
 ### Code Analysis
 
 **SharePlugin main.cpp:**
+
 ```cpp
 int main(int argc, char *argv[])
 {
@@ -155,6 +168,7 @@ int main(int argc, char *argv[])
 ```
 
 **SharePlugin Main.qml (key sections):**
+
 ```qml
 MainView {
     id: root
@@ -207,6 +221,7 @@ MainView {
    - System instability → reboot
 
 **Critical Error Pattern:**
+
 ```
 QObject::~QObject: Timers cannot be stopped from another thread
 ```
@@ -216,6 +231,7 @@ This indicates QObject lifecycle management violation when ContentHub closes the
 ### ContentHub Plugin Lifecycle
 
 From Contacts app log:
+
 ```
 qml: 'caller' is DEPRECATED. It has no effect.
 qml: No active transfer
@@ -223,6 +239,7 @@ qml: No active transfer
 ```
 
 **What happens:**
+
 1. Contacts app uses ContentHub to invoke SharePlugin
 2. SharePlugin window shows
 3. User interacts (or cancels)
@@ -267,12 +284,14 @@ BtTransfer::~BtTransfer()
 3. **Remove dangerous timer pattern:**
 
 The `scheduleRestart` timer pattern is problematic:
+
 ```qml
 Timer { id: scheduleRestart; interval: 1000; onTriggered: btModel.running = true; }
 Component.onCompleted: scheduleRestart.start()
 ```
 
 Replace with safer initialization:
+
 ```qml
 BluetoothDiscoveryModel {
     id: btModel
@@ -290,11 +309,13 @@ BluetoothDiscoveryModel {
 #### Option B: Use QQmlApplicationEngine Instead of QQuickView
 
 **Rationale:**
+
 - `QQuickView` is simpler but less flexible for lifecycle management
 - `QQmlApplicationEngine` provides better control over root object lifecycle
 - More appropriate for ContentHub plugins
 
 **Change:**
+
 ```cpp
 int main(int argc, char *argv[])
 {
@@ -316,6 +337,7 @@ int main(int argc, char *argv[])
 ```
 
 **Update Main.qml:**
+
 ```qml
 // Change from MainView to ApplicationWindow or Window
 import QtQuick 2.4
@@ -360,6 +382,7 @@ This combination provides robust lifecycle management and prevents threading vio
 ### Problem Statement
 
 SharePlugin appears with blank icon in content-hub share menu:
+
 ```
 QML QQuickImage: Failed to get image from provider: 
 image://content-hub/ratatoskr.philipa_shareplugin_251220171217
@@ -368,6 +391,7 @@ image://content-hub/ratatoskr.philipa_shareplugin_251220171217
 ### Current Configuration
 
 **shareplugin/shareplugin.desktop:**
+
 ```ini
 [Desktop Entry]
 Name=Bluetooth
@@ -388,6 +412,7 @@ ContentHub uses a special image provider that looks for icons in the click packa
 ### Solution
 
 **Change shareplugin.desktop:**
+
 ```ini
 [Desktop Entry]
 Name=Bluetooth
@@ -400,11 +425,13 @@ OnlyShowIn=Old
 ```
 
 **Explanation:**
+
 - `Icon=ratatoskr` tells ContentHub to use the main app's icon
 - ContentHub resolves this to the icon defined in manifest.json
 - The icon path is: `assets/logo.svg` (already installed by main app)
 
 **Alternative (if separate icon desired):**
+
 ```ini
 Icon=@{APP_INSTALL_DIR}/assets/shareplugin-icon.svg
 ```
@@ -427,6 +454,7 @@ But using the main app icon is standard practice and provides visual consistency
 ### Problem Statement
 
 Phone not discoverable to other Bluetooth devices (laptop test failed):
+
 - Laptop cannot detect phone
 - Phone cannot detect laptop
 - May be unrelated to Ratatoskr
@@ -438,6 +466,7 @@ Phone not discoverable to other Bluetooth devices (laptop test failed):
 #### 1. System-Level Bluetooth Configuration
 
 Ubuntu Touch system settings control discoverability:
+
 - Settings → Bluetooth → "Visible to nearby devices"
 - Default timeout (usually 2-3 minutes)
 - May be disabled by default for privacy
@@ -447,10 +476,12 @@ Ubuntu Touch system settings control discoverability:
 #### 2. OBEX Server Profile Not Registered
 
 **Current Architecture:**
+
 - We register an **OBEX Agent** (for receiving files)
 - We do NOT register an **OBEX Server** (for being discoverable as file transfer target)
 
 **BlueZ OBEX Architecture:**
+
 ```
 OBEX Agent     → Receives transfer authorization requests
 OBEX Server    → Advertises OBEX FTP/OPP service profiles
@@ -510,6 +541,7 @@ void Obexd::registerOBEXServer()
 ```
 
 **Call during initialization:**
+
 ```cpp
 Obexd::Obexd(QObject *parent) : /* ... */
 {
@@ -525,11 +557,13 @@ Obexd::Obexd(QObject *parent) : /* ... */
 **Two-phase approach:**
 
 **Phase 1 (Sprint 003):** System-level testing
+
 - Document testing procedure
 - Verify system Bluetooth pairing works
 - Determine if issue is Ratatoskr-specific
 
 **Phase 2 (Sprint 003 or 004):** OBEX Server implementation
+
 - Only if Phase 1 confirms app-specific issue
 - Implement OBEX Server registration
 - Test file transfer profile advertisement
