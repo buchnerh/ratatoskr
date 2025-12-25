@@ -1,14 +1,15 @@
 /*==========================================================
  * Program : obexd.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2025-12-18
- * Version : 0.0.1
+ * Date    : 2025-12-25
+ * Version : 0.0.3
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : OBEX daemon D-Bus interface for receiving files
  * Modification History:
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
+ * - 2025-12-25 (0.0.3) : Changed to systemBus() for AppArmor compliance.
  *========================================================*/
 
 #include "obexd.h"
@@ -19,7 +20,7 @@
 
 Obexd::Obexd(QObject *parent) :
     QAbstractListModel(parent),
-    m_dbus(QDBusConnection::sessionBus()),
+    m_dbus(QDBusConnection::systemBus()),
     m_manager("org.bluez.obex", "/org/bluez/obex", "org.bluez.obex.AgentManager1", m_dbus)
 {
     qDebug() << "creating agent on dbus";
