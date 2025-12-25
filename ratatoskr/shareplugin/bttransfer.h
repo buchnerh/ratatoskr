@@ -1,14 +1,15 @@
 /*==========================================================
  * Program : bttransfer.h              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2025-12-18
- * Version : 0.0.1
+ * Date    : 2025-12-25
+ * Version : 0.0.3
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : Bluetooth transfer header
  * Modification History:
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
+ * - 2025-12-25 (0.0.3) : Added destructor for proper cleanup.
  *========================================================*/
 
 #ifndef BTTRANSFER_H
@@ -29,6 +30,7 @@ class BtTransfer : public QObject
 
 public:
     explicit BtTransfer(QObject *parent = 0);
+    ~BtTransfer();
 
     qreal progress() const;
     bool finished() const;

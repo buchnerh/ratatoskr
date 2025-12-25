@@ -1,14 +1,15 @@
 /*==========================================================
  * Program : bttransfer.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2025-12-18
- * Version : 0.0.1
+ * Date    : 2025-12-25
+ * Version : 0.0.3
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : Bluetooth transfer for sending files
  * Modification History:
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
+ * - 2025-12-25 (0.0.3) : Added destructor for proper cleanup.
  *========================================================*/
 
 #include "bttransfer.h"
@@ -26,6 +27,16 @@ BtTransfer::BtTransfer(QObject *parent) :
     m_finished(false),
     m_error(QBluetoothTransferReply::NoError)
 {
+}
+
+BtTransfer::~BtTransfer()
+{
+    if (reply) {
+        reply->abort();
+        reply->deleteLater();
+        reply = nullptr;
+    }
+    m_queue.clear();
 }
 
 qreal BtTransfer::progress() const
