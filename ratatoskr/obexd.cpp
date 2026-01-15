@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : obexd.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2025-12-25
- * Version : 0.0.3
+ * Date    : 2026-01-15
+ * Version : 0.0.4
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -10,6 +10,7 @@
  * Modification History:
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
  * - 2025-12-25 (0.0.3) : Changed to systemBus() for AppArmor compliance.
+ * - 2026-01-15 (0.0.4) : Fixed to sessionBus() with service discovery.
  *========================================================*/
 
 #include "obexd.h"
@@ -17,21 +18,29 @@
 #include "obexagent.h"
 
 #include <QDBusReply>
+#include <QThread>
+#include <QDBusConnectionInterface>
 
 Obexd::Obexd(QObject *parent) :
     QAbstractListModel(parent),
-    m_dbus(QDBusConnection::systemBus()),
-    m_manager("org.bluez.obex", "/org/bluez/obex", "org.bluez.obex.AgentManager1", m_dbus)
+    m_dbus(QDBusConnection::sessionBus()),
+    m_manager(nullptr)
 {
     qDebug() << "creating agent on dbus";
 
     m_agent = new ObexAgent(this);
 
-    qDebug() << "registering agent on obexd-server";
-
-    QDBusReply<void > reply = m_manager.call("RegisterAgent", qVariantFromValue(QDBusObjectPath(DBUS_ADAPTER_AGENT_PATH)));
-    if (!reply.isValid())
-            qWarning() << "Error registering agent for the default adapter:" << reply.error();
+    qDebug() << "discovering obex service";
+    QString serviceName = findObexService();
+    
+    if (serviceName.isEmpty()) {
+        qWarning() << "OBEX service not found. File transfers will not work.";
+        qWarning() << "Try starting obexd manually: systemctl --user start obex.service";
+    } else {
+        qDebug() << "found OBEX service at:" << serviceName;
+        m_manager = new QDBusInterface(serviceName, "/org/bluez/obex", "org.bluez.obex.AgentManager1", m_dbus, this);
+        registerAgent(serviceName);
+    }
 
     connect(m_agent, &ObexAgent::authorized, this, &Obexd::newTransfer);
 
@@ -127,5 +136,75 @@ void Obexd::transferStatusChanged()
     Transfer *t = qobject_cast<Transfer*>(sender());
     QModelIndex idx = index(m_transfers.indexOf(t));
     emit dataChanged(idx, idx, QVector<int>() << RoleStatus);
+}
+
+QString Obexd::findObexService()
+{
+    QDBusConnectionInterface *interface = m_dbus.interface();
+    if (!interface) {
+        qWarning() << "Failed to get D-Bus interface";
+        return QString();
+    }
+
+    if (interface->isServiceRegistered("org.bluez.obex")) {
+        qDebug() << "Found OBEX service by name: org.bluez.obex";
+        return "org.bluez.obex";
+    }
+
+    qDebug() << "Named service not found, attempting D-Bus activation";
+    QDBusReply<void> activationReply = interface->startService("org.bluez.obex");
+    if (activationReply.isValid()) {
+        QThread::msleep(500);
+        if (interface->isServiceRegistered("org.bluez.obex")) {
+            qDebug() << "OBEX service activated successfully";
+            return "org.bluez.obex";
+        }
+    } else {
+        qDebug() << "D-Bus activation failed:" << activationReply.error().message();
+    }
+
+    qDebug() << "Searching for OBEX service by interface";
+    QDBusReply<QStringList> servicesReply = interface->registeredServiceNames();
+    if (servicesReply.isValid()) {
+        for (const QString &service : servicesReply.value()) {
+            if (service.startsWith(":")) {
+                QDBusInterface testInterface(service, "/org/bluez/obex", "org.bluez.obex.AgentManager1", m_dbus);
+                if (testInterface.isValid()) {
+                    qDebug() << "Found OBEX service at dynamic address:" << service;
+                    return service;
+                }
+            }
+        }
+    }
+
+    return QString();
+}
+
+bool Obexd::registerAgent(const QString &serviceName, int attempt)
+{
+    const int maxAttempts = 3;
+    const int delays[] = {0, 1000, 3000};
+
+    if (attempt > 0) {
+        qDebug() << "Retrying agent registration, attempt" << (attempt + 1) << "of" << maxAttempts;
+        QThread::msleep(delays[attempt]);
+    }
+
+    qDebug() << "registering agent on obexd-server";
+    QDBusReply<void> reply = m_manager->call("RegisterAgent", qVariantFromValue(QDBusObjectPath(DBUS_ADAPTER_AGENT_PATH)));
+    
+    if (reply.isValid()) {
+        qDebug() << "Agent registered successfully";
+        return true;
+    }
+
+    qWarning() << "Error registering agent (attempt" << (attempt + 1) << "):" << reply.error().message();
+
+    if (attempt < maxAttempts - 1) {
+        return registerAgent(serviceName, attempt + 1);
+    }
+
+    qCritical() << "Failed to register agent after" << maxAttempts << "attempts";
+    return false;
 }
 
