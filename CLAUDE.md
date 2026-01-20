@@ -37,6 +37,7 @@ container managed by 'clickable'
 - [ADR-001: Bluetooth File Transfer Architecture Strategy](docs/ADR-001-bluetooth-architecture-strategy.md) - 2025-12-18
 - [ADR-002: AppArmor Security Policy for Bluetooth Access](docs/ADR-002-apparmor-bluetooth-policy.md) - 2025-12-18
 - [ADR-003: OBEX D-Bus Service Discovery and Agent Registration](docs/ADR-003-obex-dbus-service-discovery.md) - 2026-01-15
+- [ADR-004: AppArmor D-Bus Receive Permissions for OBEX Agent](docs/ADR-004-apparmor-dbus-receive-permissions.md) - 2026-01-20
 
 # Versioning Strategy
 

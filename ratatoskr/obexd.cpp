@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : obexd.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-01-15
- * Version : 0.0.4
+ * Date    : 2026-01-20
+ * Version : 0.0.5
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -11,6 +11,7 @@
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
  * - 2025-12-25 (0.0.3) : Changed to systemBus() for AppArmor compliance.
  * - 2026-01-15 (0.0.4) : Fixed to sessionBus() with service discovery.
+ * - 2026-01-20 (0.0.5) : Fixed logging message for OBEX service activation.
  *========================================================*/
 
 #include "obexd.h"
@@ -151,7 +152,7 @@ QString Obexd::findObexService()
         return "org.bluez.obex";
     }
 
-    qDebug() << "Named service not found, attempting D-Bus activation";
+    qDebug() << "OBEX service not found, attempting D-Bus activation";
     QDBusReply<void> activationReply = interface->startService("org.bluez.obex");
     if (activationReply.isValid()) {
         QThread::msleep(500);
