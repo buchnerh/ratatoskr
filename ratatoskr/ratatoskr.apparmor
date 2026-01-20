@@ -2,6 +2,7 @@
     "policy_groups": [
         "bluetooth",
         "networking",
+        "content_exchange",
         "content_exchange_source"
     ],
     "policy_version": 20.04
