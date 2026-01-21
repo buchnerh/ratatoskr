@@ -1,6 +1,17 @@
 # UBports ContentHub API reference documents
 (pan, v0, 21/01/2026)
 
+Incoming file received over BT by the 'ratatoskr' app are stored in an 
+app-specific cache folder below the user's home directory:
+
+```
+/home/phablet/.cache/ratatoskr.philipa/
+```
+
+The app should offer the user a way to move them to regular folders (typically 
+below `Documents/`) or share them with another app (e.g. to upload them to a 
+cloud service).
+
 ## Regular apps should not access `Documents/` folder directly
 
 From the definition of [document-files](https://docs.ubports.com/no/latest/appdev/platform/apparmor.html#document-files)
