@@ -1,5 +1,5 @@
 # Roadmap for `ratatoskr` app
-(pan, v0, 21/01/2026)
+(pan, v1, 23/01/2026)
 
 
 ## Enhancements
@@ -8,11 +8,16 @@
 
 - [ ] Add confirmation pop-up before deleting received file from ItemList
 - [ ] Add confirmation pop-up before accepting incoming file over BT
-- [ ] Get rid of 'unconfined' template in AA profile (may require platform changes)
+- [ ] Get rid of 'unconfined' template in AA profile (may require platform 
+  changes)
 
 ### SharePlugin
 
-- [ ] Get rid of 'unconfined' template in AA profile (may require platform changes)
+- [ ] Rename "Bluetooth" desktop icon to "BT plugin"
+- [ ] Find way of hiding plugin icon on desktop -- may require to redesign
+  plugin as Headless ContentHub peer (see trace from Sprint #006)
+- [ ] Get rid of 'unconfined' template in AA profile (may require platform 
+  changes)
 
 ## Bugs
 
@@ -20,5 +25,5 @@
 
 ### SharePlugin
 
-- [ ] Plugin crashes and causes phone to restart
-- [ ] Plugin has no icon
+- [x] Plugin crashes and causes phone to restart
+- [ ] Plugin has no icon -- should use `ratatoskr/shareplugin/icon.svg`

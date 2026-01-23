@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-01-21
- * Version : 0.0.4
+ * Date    : 2026-01-22
+ * Version : 0.0.5
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -11,6 +11,7 @@
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
  * - 2025-12-25 (0.0.3) : Switched to QQmlApplicationEngine.
  * - 2026-01-21 (0.0.4) : Fixed applicationName to match manifest.
+ * - 2026-01-22 (0.0.5) : Fixed ContentHub integration (renamed transfer vars).
  *========================================================*/
 
 import QtQuick 2.4
@@ -33,17 +34,18 @@ MainView {
     property bool peerSelected: false
 
     BtTransfer {
-        id: transfer
+        id: btTransfer
     }
 
     Connections {
         target: ContentHub
 
         onShareRequested: {
+            console.log("ContentHub share requested, transfer:", transfer)
             var tmp = []
             for (var i = 0; i < transfer.items.length; i++) {
                 var filePath = String(transfer.items[i].url).replace('file://', '')
-                print("Should share file", filePath)
+                console.log("Should share file", filePath)
                 tmp.push(filePath);
             }
             root.fileNames = tmp
@@ -241,21 +243,21 @@ MainView {
                                 width: height
                                 visible: isInProgress || isDone || isError
 
-                                property bool isInProgress: transfer.currentFile === modelData
+                                property bool isInProgress: btTransfer.currentFile === modelData
                                 property bool isDone: false
                                 property bool isError: false
                                 onIsInProgressChanged: {
-                                    print("isinprogresschanged:", isInProgress, transfer.error)
+                                    print("isinprogresschanged:", isInProgress, btTransfer.error)
                                     if (!isInProgress) {
-                                        isDone = !transfer.error;
-                                        isError = !!transfer.error
+                                        isDone = !btTransfer.error;
+                                        isError = !!btTransfer.error
                                     }
                                 }
 
                                 ActivityIndicator {
                                     anchors.centerIn: parent
                                     visible: running
-                                    running: !transfer.finished && transfer.progress > 0 && !parent.isDone
+                                    running: !btTransfer.finished && btTransfer.progress > 0 && !parent.isDone
                                 }
 
                                 Icon {
@@ -291,7 +293,7 @@ MainView {
                         onClicked: {
                             btModel.continuousDiscovery = false;
                             for (var i = 0; i < root.fileNames.length; i++) {
-                                transfer.sendFile(remoteAddress, root.fileNames[i])
+                                btTransfer.sendFile(remoteAddress, root.fileNames[i])
                             }
                             root.peerSelected = true;
                         }
@@ -306,24 +308,24 @@ MainView {
                     Label {
                         Layout.fillWidth: true
                         wrapMode: Text.WordWrap
-                        text: transfer.error ? "Transfer failed."
-                                : transfer.finished ? (root.fileNames.length == 1 ? "File transferred." : "All files transferred.")
+                        text: btTransfer.error ? "Transfer failed."
+                                : btTransfer.finished ? (root.fileNames.length == 1 ? "File transferred." : "All files transferred.")
                                 : "Transferring..."
                         fontSize: "large"
                     }
 
                     ProgressBar {
                         Layout.fillWidth: true
-                        value: transfer.progress
-                        visible: !transfer.finished && !transfer.error
+                        value: btTransfer.progress
+                        visible: !btTransfer.finished && !btTransfer.error
                     }
 
                     Button {
                         Layout.fillWidth: true
                         text: i18n.tr("Close")
-                        color: transfer.error ? LomiriColors.red : LomiriColors.green
+                        color: btTransfer.error ? LomiriColors.red : LomiriColors.green
                         onClicked: Qt.quit();
-                        visible: transfer.finished || transfer.error
+                        visible: btTransfer.finished || btTransfer.error
                     }
                 }
 
