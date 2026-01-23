@@ -2,7 +2,7 @@
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-01-23
- * Version : 0.0.6
+ * Version : 0.0.7
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -13,6 +13,7 @@
  * - 2026-01-21 (0.0.4) : Fixed applicationName to match manifest.
  * - 2026-01-22 (0.0.5) : Fixed ContentHub integration (renamed transfer vars).
  * - 2026-01-23 (0.0.6) : Fixed device list visibility (hide file preview when empty).
+ * - 2026-01-23 (0.0.7) : Fixed Page anchoring to fill parent MainView.
  *========================================================*/
 
 import QtQuick 2.4
@@ -111,6 +112,7 @@ MainView {
 
     Page {
         id: page
+        anchors.fill: parent
         header: PageHeader {
             title: i18n.tr("Share via Bluetooth")
             leadingActionBar.actions: [
