@@ -2,7 +2,7 @@
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-01-28
- * Version : 0.0.15
+ * Version : 0.0.16
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -22,6 +22,7 @@
  * - 2026-01-28 (0.0.13): Fixed ListView contentHeight calculation by removing cacheBuffer=0.
  * - 2026-01-28 (0.0.14): Fixed GridLayout space allocation for hidden file preview Item.
  * - 2026-01-28 (0.0.15): Added diagnostic logging for parent Item and ListView dimensions.
+ * - 2026-01-28 (0.0.16): Fixed file preview Item completely excluded from layout when empty.
  *========================================================*/
 
 import QtQuick 2.4
@@ -196,9 +197,11 @@ MainView {
             columns: width > height ? 2 : 1
 
             Item {
-                Layout.fillWidth: true
+                id: filePreviewContainer
+                Layout.fillWidth: root.fileNames.length > 0
                 Layout.fillHeight: root.fileNames.length > 0
                 Layout.preferredHeight: root.fileNames.length > 0 ? -1 : 0
+                Layout.preferredWidth: root.fileNames.length > 0 ? -1 : 0
                 visible: root.fileNames.length > 0
                 GridLayout {
                     anchors.fill: parent
