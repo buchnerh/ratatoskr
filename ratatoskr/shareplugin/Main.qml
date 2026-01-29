@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-01-28
- * Version : 0.0.16
+ * Date    : 2026-01-29
+ * Version : 0.0.17
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -23,6 +23,7 @@
  * - 2026-01-28 (0.0.14): Fixed GridLayout space allocation for hidden file preview Item.
  * - 2026-01-28 (0.0.15): Added diagnostic logging for parent Item and ListView dimensions.
  * - 2026-01-28 (0.0.16): Fixed file preview Item completely excluded from layout when empty.
+ * - 2026-01-29 (0.0.17): Added Window root element required by QQmlApplicationEngine.
  *========================================================*/
 
 import QtQuick 2.4
@@ -33,8 +34,15 @@ import QtBluetooth 5.4
 import Shareplugin 0.1
 import Lomiri.Content 1.3
 
-MainView {
-    id: root
+Window {
+    id: window
+    visible: true
+    width: units.gu(50)
+    height: units.gu(75)
+
+    MainView {
+        id: root
+        anchors.fill: parent
     applicationName: "ratatoskr.philipa"
     anchorToKeyboard: true
 
@@ -413,6 +421,7 @@ MainView {
 
             }
         }
+    }
     }
 }
 
