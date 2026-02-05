@@ -1,11 +1,11 @@
 # Roadmap for `ratatoskr` app
-(pan, v2, 30/01/2026)
+(pan, v3, 05/02/2026)
 
 
 ## Generalities
 
 - [x] Contact Michael Zanetti to determine appropriate license
-- [ ] Update ADR-005 with final display issue resolution (`Window` object)
+- [x] Update ADR-005 with final display issue resolution (`Window` object)
 
 ## Enhancements
 
@@ -27,6 +27,10 @@
   changes)
 - [ ] if at all possible, the list should also allow to identify the devices
   that are already paired and/or connected over Bluetooth
+- [ ] a user preference dialog could be added to control the amount of 
+  filtering used to populate the device list:
+  - filter out devices whose name is their MAC address
+  - filter out devices that are not paired
 
 ## Bugs
 
