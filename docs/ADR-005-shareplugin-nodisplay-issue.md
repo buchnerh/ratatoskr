@@ -1,7 +1,7 @@
 # ADR-005: SharePlugin NoDisplay Issue and ContentHub Integration
 
-**Date:** 2026-01-22  
-**Status:** Accepted  
+**Date:** 2026-01-22 (Updated: 2026-02-05)  
+**Status:** Resolved  
 **Context:** Sprint #007
 
 ## Problem Statement
@@ -74,8 +74,9 @@ Alternative (headless service) would require:
 ### Changes Required
 
 1. **shareplugin.desktop**: Remove line 9 (`NoDisplay=true`)
-2. **Testing**: Verify ContentHub integration works
-3. **Cleanup**: Remove unused folders (`ratatoskr/plugins`, `ratatoskr/qml`)
+2. **Main.qml**: Add Window root element required by QQmlApplicationEngine
+3. **Testing**: Verify ContentHub integration works
+4. **Cleanup**: Remove unused folders (`ratatoskr/plugins`, `ratatoskr/qml`)
 
 ### Updated Desktop File
 
@@ -89,6 +90,37 @@ Type=Application
 X-Ubuntu-Touch=true
 X-Lomiri-Single-Instance=true
 ```
+
+### Resolution Details
+
+**Issue Discovered (2026-01-29):**  
+After removing `NoDisplay=true`, the SharePlugin still failed to display. Investigation revealed that the QML file used `MainView` as the root element, which is incompatible with `QQmlApplicationEngine` used in `main.cpp`.
+
+**Root Cause:**  
+The mismatch between `QQmlApplicationEngine` (expects Window-based QML) and `MainView` (designed for `QQuickView`) prevented the UI from rendering.
+
+**Solution Implemented:**  
+Wrapped the existing `MainView` component inside a `Window` object in `Main.qml`:
+
+```qml
+Window {
+    id: window
+    visible: true
+    width: units.gu(50)
+    height: units.gu(75)
+
+    MainView {
+        id: root
+        anchors.fill: parent
+        // ... existing code
+    }
+}
+```
+
+This change made the QML compatible with `QQmlApplicationEngine` while preserving all existing functionality.
+
+**Verification:**  
+Testing confirmed the SharePlugin now displays correctly when invoked from ContentHub and successfully transfers files via Bluetooth.
 
 ## Consequences
 
@@ -111,10 +143,13 @@ X-Lomiri-Single-Instance=true
 
 ## Follow-up Tasks
 
-1. Test SharePlugin with various file types
-2. Consider adding icon to distinguish from main app
-3. Document the dual-stack architecture
-4. Remove obsolete folders
+1. ~~Test SharePlugin with various file types~~ ✅ Completed
+2. ~~Fix Window root element issue~~ ✅ Completed (2026-01-29)
+3. ~~Add device name resolution for better UX~~ ✅ Completed (2026-02-02)
+4. ~~Filter MAC-based device names~~ ✅ Completed (2026-02-05)
+5. Consider adding icon to distinguish from main app
+6. Document the dual-stack architecture
+7. Remove obsolete folders
 
 ## References
 
