@@ -4,7 +4,7 @@
 
 ## Generalities
 
-- [ ] Contact Michael Zanetti to determine appropriate license
+- [x] Contact Michael Zanetti to determine appropriate license
 - [ ] Update ADR-005 with final display issue resolution (`Window` object)
 
 ## Enhancements
@@ -37,5 +37,5 @@
 - [x] Plugin crashes and causes phone to restart
 - [ ] Plugin has no icon -- should use `ratatoskr/shareplugin/icon.svg` (BT 
   logo)
-- [ ] the device list at present only contains MAC addresses -- it should also 
+- [x] the device list at present only contains MAC addresses -- it should also 
   show the device name

@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-02-02
- * Version : 0.1.2
+ * Date    : 2026-02-05
+ * Version : 0.1.3
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -16,6 +16,7 @@
  * - 2026-01-29 (0.1.0) : Removed file preview, cleaned debug logs, fixed indentation.
  * - 2026-02-02 (0.1.1) : Added device name resolution using DeviceNameResolver.
  * - 2026-02-02 (0.1.2) : Added dynamic name update monitoring for newly discovered devices.
+ * - 2026-02-05 (0.1.3) : Fixed list scrollability and added MAC-based name filtering.
  *========================================================*/
 
 import QtQuick 2.4
@@ -124,6 +125,12 @@ Window {
                 }
                 var deviceName = deviceNameResolver.resolveDeviceName(device);
                 console.log("Resolved device name:", deviceName, "for address:", device);
+                
+                if (deviceNameResolver.isMacBasedName(deviceName)) {
+                    console.log("Skipping device with MAC-based name:", deviceName);
+                    return;
+                }
+                
                 deviceListModel.append({
                     "remoteAddress": device,
                     "deviceName": deviceName,
@@ -205,76 +212,73 @@ Window {
                 anchors.fill: parent
                 anchors.topMargin: page.header.height + progressBar.height
 
-                Item {
-                    id: deviceListContainer
-                    anchors.fill: parent
-
-                    Connections {
-                        target: deviceListModel
-                        onCountChanged: {
-                            if (deviceListView.model === deviceListModel) {
-                                deviceListView.forceLayout()
-                            }
+                Connections {
+                    target: deviceListModel
+                    onCountChanged: {
+                        if (deviceListView.model === deviceListModel) {
+                            deviceListView.forceLayout()
                         }
                     }
+                }
 
-                    ListView {
-                        id: deviceListView
-                        anchors.fill: parent
-                        model: deviceListModel
-                        visible: !root.peerSelected
-                        clip: true
-                        spacing: units.gu(1)
+                ListView {
+                    id: deviceListView
+                    anchors.fill: parent
+                    model: deviceListModel
+                    visible: !root.peerSelected
+                    clip: true
+                    spacing: units.gu(1)
+                    interactive: true
+                    boundsBehavior: Flickable.DragAndOvershootBounds
 
                         onModelChanged: {
                             forceLayout()
                         }
 
-                        delegate: ListItem {
-                            width: ListView.view ? ListView.view.width : parent.width
-                            height: units.gu(7)
-                            
-                            ListItemLayout {
-                                title.text: (model.deviceName ? model.deviceName : model.name) || model.remoteAddress
-                            }
+                    delegate: ListItem {
+                        width: ListView.view ? ListView.view.width : parent.width
+                        height: units.gu(7)
+                        
+                        ListItemLayout {
+                            title.text: (model.deviceName ? model.deviceName : model.name) || model.remoteAddress
+                        }
 
-                            onClicked: {
-                                btModel.continuousDiscovery = false;
-                                for (var i = 0; i < root.fileNames.length; i++) {
-                                    btTransfer.sendFile(model.remoteAddress, root.fileNames[i])
-                                }
-                                root.peerSelected = true;
+                        onClicked: {
+                            btModel.continuousDiscovery = false;
+                            for (var i = 0; i < root.fileNames.length; i++) {
+                                btTransfer.sendFile(model.remoteAddress, root.fileNames[i])
                             }
+                            root.peerSelected = true;
                         }
                     }
+                }
 
-                    ColumnLayout {
-                        width: parent.width - units.gu(4)
-                        anchors.centerIn: parent
-                        spacing: units.gu(2)
-                        visible: root.peerSelected
-                        Label {
-                            Layout.fillWidth: true
-                            wrapMode: Text.WordWrap
-                            text: btTransfer.error ? "Transfer failed."
-                                    : btTransfer.finished ? (root.fileNames.length == 1 ? "File transferred." : "All files transferred.")
-                                    : "Transferring..."
-                            fontSize: "large"
-                        }
+                ColumnLayout {
+                    width: parent.width - units.gu(4)
+                    anchors.centerIn: parent
+                    spacing: units.gu(2)
+                    visible: root.peerSelected
+                    Label {
+                        Layout.fillWidth: true
+                        wrapMode: Text.WordWrap
+                        text: btTransfer.error ? "Transfer failed."
+                                : btTransfer.finished ? (root.fileNames.length == 1 ? "File transferred." : "All files transferred.")
+                                : "Transferring..."
+                        fontSize: "large"
+                    }
 
-                        ProgressBar {
-                            Layout.fillWidth: true
-                            value: btTransfer.progress
-                            visible: !btTransfer.finished && !btTransfer.error
-                        }
+                    ProgressBar {
+                        Layout.fillWidth: true
+                        value: btTransfer.progress
+                        visible: !btTransfer.finished && !btTransfer.error
+                    }
 
-                        Button {
-                            Layout.fillWidth: true
-                            text: i18n.tr("Close")
-                            color: btTransfer.error ? LomiriColors.red : LomiriColors.green
-                            onClicked: Qt.quit();
-                            visible: btTransfer.finished || btTransfer.error
-                        }
+                    Button {
+                        Layout.fillWidth: true
+                        text: i18n.tr("Close")
+                        color: btTransfer.error ? LomiriColors.red : LomiriColors.green
+                        onClicked: Qt.quit();
+                        visible: btTransfer.finished || btTransfer.error
                     }
                 }
             }

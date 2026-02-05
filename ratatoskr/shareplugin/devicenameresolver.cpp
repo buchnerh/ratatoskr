@@ -1,14 +1,15 @@
 /*==========================================================
  * Program : devicenameresolver.cpp     Project : ratatoskr
  * Author  : Philippe Andersson + Copilot CLI.
- * Date    : 2026-02-02
- * Version : 0.02
+ * Date    : 2026-02-05
+ * Version : 0.03
  * Notice  : (c) Les Ateliers du Heron, 2025-2026
  * License : GNU GPL v3 or later
  * Comment : Resolves Bluetooth device MAC addresses to names.
  * Modification History:
  * - 2026-02-02 (0.01) : Initial release.
  * - 2026-02-02 (0.02) : Added D-Bus monitoring for dynamic name updates.
+ * - 2026-02-05 (0.03) : Added MAC-based name detection.
  *========================================================*/
 
 #include "devicenameresolver.h"
@@ -18,6 +19,7 @@
 #include <QDBusArgument>
 #include <QDBusObjectPath>
 #include <QDebug>
+#include <QRegularExpression>
 
 DeviceNameResolver::DeviceNameResolver(QObject *parent)
   : QObject(parent)
@@ -215,4 +217,17 @@ void DeviceNameResolver::onPropertiesChanged(const QString &interface, const QVa
   if (!name.isEmpty()) {
     emit deviceNameChanged(address, name);
   }
+}
+
+bool DeviceNameResolver::isMacBasedName(const QString &name) const
+{
+  if (name.isEmpty()) {
+    return false;
+  }
+
+  static QRegularExpression macPattern(
+    "^([0-9A-Fa-f]{2}[-:]){5}[0-9A-Fa-f]{2}$"
+  );
+  
+  return macPattern.match(name).hasMatch();
 }
