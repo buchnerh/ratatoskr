@@ -1,11 +1,13 @@
 # Roadmap for `ratatoskr` app
-(pan, v3, 05/02/2026)
+(pan, v4, 10/02/2026)
 
 
 ## Generalities
 
 - [x] Contact Michael Zanetti to determine appropriate license
 - [x] Update ADR-005 with final display issue resolution (`Window` object)
+- [ ] Comment code where needed
+- [ ] Synthetise ADRs where possible
 
 ## Enhancements
 
@@ -43,3 +45,4 @@
   logo)
 - [x] the device list at present only contains MAC addresses -- it should also 
   show the device name
+- [ ] display warning pop-up if started from AppDrawer i/o "Share" icon
