@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : main.cpp                    Project : ratatoskr
  * Author  : Philippe Andersson + Copilot CLI.
- * Date    : 2025-12-19
- * Version : 0.0.1
+ * Date    : 2026-02-11
+ * Version : 0.0.2
  * Notice  : (c) Les Ateliers du Heron, 2025
  * License : GNU GPL v3 or later
  * Comment : Main application entry point.
@@ -10,12 +10,14 @@
  * Modification History:
  * - 2025-12-18 (0.0.1) : Initial adaptation from ubtd-20.04.
  * - 2025-12-19 (0.0.1) : Added BluetoothManager, DeviceDiscovery, OBEXTransfer.
+ * - 2026-02-11 (0.0.2) : Added version logging at startup.
  *========================================================*/
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QQmlContext>
+#include <QDebug>
 
 #include "adapter.h"
 #include "obexd.h"
@@ -27,6 +29,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     app.setApplicationName("ratatoskr.philipa");
+
+    qDebug() << "Ratatoskr" << BUILD_VERSION << "starting...";
 
     Adapter adapter;
     Obexd obexd;

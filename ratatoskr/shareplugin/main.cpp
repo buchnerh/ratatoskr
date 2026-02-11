@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : main.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-02-02
- * Version : 0.0.5
+ * Date    : 2026-02-11
+ * Version : 0.0.6
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -12,11 +12,13 @@
  * - 2025-12-25 (0.0.3) : Switched to QQmlApplicationEngine for better lifecycle.
  * - 2026-01-21 (0.0.4) : Fixed applicationName to match manifest.
  * - 2026-02-02 (0.0.5) : Added DeviceNameResolver for device name display.
+ * - 2026-02-11 (0.0.6) : Added version logging at startup.
  *========================================================*/
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QDebug>
 
 #include "adapter.h"
 #include "bttransfer.h"
@@ -25,6 +27,8 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    qDebug() << "Ratatoskr SharePlugin" << BUILD_VERSION << "starting...";
 
     qmlRegisterType<BtTransfer>("Shareplugin", 0, 1, "BtTransfer");
     qmlRegisterType<DeviceNameResolver>("Shareplugin", 0, 1, "DeviceNameResolver");

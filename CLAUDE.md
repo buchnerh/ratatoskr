@@ -39,6 +39,7 @@ container managed by 'clickable'
 - [ADR-003: OBEX D-Bus Service Discovery and Agent Registration](docs/ADR-003-obex-dbus-service-discovery.md) - 2026-01-15
 - [ADR-004: AppArmor D-Bus Receive Permissions for OBEX Agent](docs/ADR-004-apparmor-dbus-receive-permissions.md) - 2026-01-20
 - [ADR-005: SharePlugin NoDisplay Issue and ContentHub Integration](docs/ADR-005-shareplugin-nodisplay-issue.md) - 2026-01-22
+- [ADR-006: Version Management Strategy](docs/ADR-006-version-management-strategy.md) - 2026-02-11
 
 # Versioning Strategy
 
