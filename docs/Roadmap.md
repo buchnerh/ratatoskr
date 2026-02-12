@@ -33,7 +33,7 @@
 - [ ] a user preference dialog could be added to control the amount of 
   filtering used to populate the device list:
   - filter out devices whose name is their MAC address
-  - filter out devices that are not paired
+  - filter out devices that are not paired / connected
 - [x] SharePlugin logs its version on startup
 
 ## Bugs
@@ -47,4 +47,4 @@
   logo)
 - [x] the device list at present only contains MAC addresses -- it should also 
   show the device name
-- [ ] display warning pop-up if started from AppDrawer i/o "Share" icon
+- [x] display warning pop-up if started from AppDrawer i/o "Share" icon
