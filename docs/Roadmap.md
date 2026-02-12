@@ -17,7 +17,7 @@
 - [ ] Add confirmation pop-up before accepting incoming file over BT
 - [ ] Get rid of 'unconfined' template in AA profile (may require platform 
   changes)
-- [ ] Code cleanup: remove objects that are not needed (BluetoothManager?,
+- [x] Code cleanup: remove objects that are not needed (BluetoothManager?,
   DeviceDiscovery?, OBEXTransferService?)
 - [x] App logs its version on startup
 
@@ -28,10 +28,10 @@
   plugin as Headless ContentHub peer (see trace from Sprint #006)
 - [ ] Get rid of 'unconfined' template in AA profile (may require platform 
   changes)
-- [ ] if at all possible, the list should also allow to identify the devices
+- [ ] If at all possible, the list should also allow to identify the devices
   that are already paired and/or connected over Bluetooth
-- [ ] a user preference dialog could be added to control the amount of 
-  filtering used to populate the device list:
+- [ ] A user preference dialog should be added to control the amount of 
+  filtering used when populating the device list:
   - filter out devices whose name is their MAC address
   - filter out devices that are not paired / connected
 - [x] SharePlugin logs its version on startup
@@ -40,11 +40,13 @@
 
 ### Main app
 
+- [ ] Clarify use for "Nearby Devices" page
+
 ### SharePlugin
 
 - [x] Plugin crashes and causes phone to restart
 - [x] Plugin has no icon -- should use `ratatoskr/shareplugin/icon.svg` (BT 
   logo)
-- [x] the device list at present only contains MAC addresses -- it should also 
+- [x] The device list at present only contains MAC addresses -- it should also 
   show the device name
-- [x] display warning pop-up if started from AppDrawer i/o "Share" icon
+- [x] Display warning pop-up if started from AppDrawer i/o "Share" icon
