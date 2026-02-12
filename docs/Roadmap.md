@@ -6,7 +6,7 @@
 
 - [x] Contact Michael Zanetti to determine appropriate license
 - [x] Update ADR-005 with final display issue resolution (`Window` object)
-- [ ] Comment code where needed
+- [x] Comment code where needed
 - [ ] Synthetise ADRs where possible
 
 ## Enhancements
