@@ -53,6 +53,8 @@ Window {
                 console.log("Startup check triggered, fileNames.length:", root.fileNames.length)
                 if (root.fileNames.length === 0) {
                     console.log("SharePlugin launched directly without files - showing warning")
+                    btModel.running = false
+                    btModel.continuousDiscovery = false
                     PopupUtils.open(directLaunchWarningDialog, root)
                 } else {
                     console.log("SharePlugin has files, normal operation")
