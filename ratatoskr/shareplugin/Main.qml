@@ -2,7 +2,7 @@
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-02-12
- * Version : 0.1.4
+ * Version : 0.1.5
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -18,6 +18,7 @@
  * - 2026-02-02 (0.1.2) : Added dynamic name update monitoring for newly discovered devices.
  * - 2026-02-05 (0.1.3) : Fixed list scrollability and added MAC-based name filtering.
  * - 2026-02-12 (0.1.4) : Added warning dialog for direct launch from App Drawer.
+ * - 2026-02-12 (0.1.5) : Added comments explaining timing and Bluetooth state management.
  *========================================================*/
 
 import QtQuick 2.4
@@ -124,8 +125,11 @@ Window {
             }
         }
 
+        // Bluetooth device discovery with continuous scanning
+        // continuousDiscovery flag prevents normal Bluetooth stop/start cycles
         BluetoothDiscoveryModel {
             id: btModel
+            // Custom property to enable auto-restart after discovery completes
             property bool continuousDiscovery: true
             onContinuousDiscoveryChanged: {
                 if (continuousDiscovery && !running) {
@@ -138,12 +142,14 @@ Window {
             running: false
 
             Component.onCompleted: {
+                // Qt.callLater avoids signal recursion during initialization
                 Qt.callLater(function() {
                     running = true
                 })
             }
 
             onRunningChanged: {
+                // Auto-restart discovery when it stops (unless disabled by continuousDiscovery flag)
                 if (!running && continuousDiscovery) {
                     Qt.callLater(function() {
                         running = true
@@ -155,6 +161,7 @@ Window {
             onServiceDiscovered: console.log("Found new service " + service.deviceAddress + " " + service.deviceName + " " + service.serviceName);
             onDeviceDiscovered: {
                 console.log("New device: " + device)
+                // Deduplication: update existing device instead of adding duplicate
                 for (var i = 0; i < deviceListModel.count; i++) {
                     if (deviceListModel.get(i).remoteAddress === device) {
                         return;
@@ -163,6 +170,8 @@ Window {
                 var deviceName = deviceNameResolver.resolveDeviceName(device);
                 console.log("Resolved device name:", deviceName, "for address:", device);
                 
+                // Filter out devices with MAC address as name (e.g., "00-11-22-33-44-55")
+                // These are typically devices without proper Bluetooth name set
                 if (deviceNameResolver.isMacBasedName(deviceName)) {
                     console.log("Skipping device with MAC-based name:", deviceName);
                     return;
@@ -173,6 +182,7 @@ Window {
                     "deviceName": deviceName,
                     "name": deviceName
                 });
+                // Start monitoring for name changes (some devices broadcast name after discovery)
                 deviceNameResolver.monitorDevice(device);
             }
             onErrorChanged: {

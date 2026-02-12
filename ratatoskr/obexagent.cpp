@@ -1,14 +1,15 @@
 /*==========================================================
  * Program : obexagent.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2025-12-18
- * Version : 0.0.1
+ * Date    : 2026-02-12
+ * Version : 0.0.2
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : OBEX agent implementation
  * Modification History:
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
+ * - 2026-02-12 (0.0.2) : Added comments explaining D-Bus deferred reply pattern.
  *========================================================*/
 
 #include "obexagent.h"
@@ -39,11 +40,19 @@ QString ObexAgent::AuthorizePush(const QDBusObjectPath &transfer)
 {
     qDebug() << "authorize called" <<  transfer.path();
 
-
+    // D-Bus deferred reply pattern: we need to return immediately but respond later
+    // setDelayedReply(true) tells D-Bus this method will reply asynchronously
     setDelayedReply(true);
+    
+    // Store the original D-Bus message so we can send the reply later via accept()
     m_pendingRequests[transfer.path()] = message();
+    
+    // Emit signal via QTimer to avoid Qt event loop re-entrancy issues
+    // Direct emit could cause problems if handlers call back into D-Bus
     QTimer::singleShot(0, [this, transfer]() { emit authorized(transfer.path());});
+    
     qDebug() << "returning";
+    // Empty return is required by D-Bus protocol for async handlers
     return QString();
 }
 

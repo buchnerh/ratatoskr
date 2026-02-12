@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : obexd.cpp              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-01-20
- * Version : 0.0.5
+ * Date    : 2026-02-12
+ * Version : 0.0.6
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -12,6 +12,7 @@
  * - 2025-12-25 (0.0.3) : Changed to systemBus() for AppArmor compliance.
  * - 2026-01-15 (0.0.4) : Fixed to sessionBus() with service discovery.
  * - 2026-01-20 (0.0.5) : Fixed logging message for OBEX service activation.
+ * - 2026-02-12 (0.0.6) : Added comments for service discovery and retry logic.
  *========================================================*/
 
 #include "obexd.h"
@@ -147,14 +148,21 @@ QString Obexd::findObexService()
         return QString();
     }
 
+    // Multi-stage OBEX service discovery strategy:
+    // Ubuntu Touch's AppArmor and D-Bus activation can cause timing/permission issues
+    
+    // Stage 1: Direct name lookup (fastest, works if service already running)
     if (interface->isServiceRegistered("org.bluez.obex")) {
         qDebug() << "Found OBEX service by name: org.bluez.obex";
         return "org.bluez.obex";
     }
 
+    // Stage 2: D-Bus activation with timing workaround
     qDebug() << "OBEX service not found, attempting D-Bus activation";
     QDBusReply<void> activationReply = interface->startService("org.bluez.obex");
     if (activationReply.isValid()) {
+        // CRITICAL: 500ms delay allows bluez-obexd to fully initialize
+        // Without this, service may appear registered but not respond to calls
         QThread::msleep(500);
         if (interface->isServiceRegistered("org.bluez.obex")) {
             qDebug() << "OBEX service activated successfully";
@@ -164,6 +172,8 @@ QString Obexd::findObexService()
         qDebug() << "D-Bus activation failed:" << activationReply.error().message();
     }
 
+    // Stage 3: Dynamic address lookup (fallback for unnamed/confined services)
+    // Some confinement scenarios result in services with dynamic addresses like ":1.234"
     qDebug() << "Searching for OBEX service by interface";
     QDBusReply<QStringList> servicesReply = interface->registeredServiceNames();
     if (servicesReply.isValid()) {
@@ -184,6 +194,8 @@ QString Obexd::findObexService()
 bool Obexd::registerAgent(const QString &serviceName, int attempt)
 {
     const int maxAttempts = 3;
+    // Exponential backoff: 0ms, 1s, 3s
+    // Works around race conditions in bluez-obexd initialization
     const int delays[] = {0, 1000, 3000};
 
     if (attempt > 0) {
