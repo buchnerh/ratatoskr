@@ -47,12 +47,15 @@ Window {
         Timer {
             id: startupCheckTimer
             interval: 500
-            running: false
+            running: true
             repeat: false
             onTriggered: {
+                console.log("Startup check triggered, fileNames.length:", root.fileNames.length)
                 if (root.fileNames.length === 0) {
                     console.log("SharePlugin launched directly without files - showing warning")
-                    PopupUtils.open(directLaunchWarningDialog)
+                    PopupUtils.open(directLaunchWarningDialog, root)
+                } else {
+                    console.log("SharePlugin has files, normal operation")
                 }
             }
         }
@@ -102,6 +105,7 @@ Window {
 
             onShareRequested: {
                 console.log("ContentHub share requested, transfer:", transfer)
+                startupCheckTimer.stop()
                 var tmp = []
                 for (var i = 0; i < transfer.items.length; i++) {
                     var filePath = String(transfer.items[i].url).replace('file://', '')
@@ -109,12 +113,7 @@ Window {
                     tmp.push(filePath);
                 }
                 root.fileNames = tmp
-                startupCheckTimer.stop()
             }
-        }
-
-        Component.onCompleted: {
-            startupCheckTimer.start()
         }
 
         Connections {
