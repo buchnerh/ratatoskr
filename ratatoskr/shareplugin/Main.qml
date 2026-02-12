@@ -56,8 +56,6 @@ Window {
                     btModel.running = false
                     btModel.continuousDiscovery = false
                     PopupUtils.open(directLaunchWarningDialog, root)
-                } else {
-                    console.log("SharePlugin has files, normal operation")
                 }
             }
         }
