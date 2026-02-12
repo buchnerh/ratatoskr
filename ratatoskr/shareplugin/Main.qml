@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml              Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-02-05
- * Version : 0.1.3
+ * Date    : 2026-02-12
+ * Version : 0.1.4
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -17,12 +17,14 @@
  * - 2026-02-02 (0.1.1) : Added device name resolution using DeviceNameResolver.
  * - 2026-02-02 (0.1.2) : Added dynamic name update monitoring for newly discovered devices.
  * - 2026-02-05 (0.1.3) : Fixed list scrollability and added MAC-based name filtering.
+ * - 2026-02-12 (0.1.4) : Added warning dialog for direct launch from App Drawer.
  *========================================================*/
 
 import QtQuick 2.4
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.1
 import Lomiri.Components 1.3
+import Lomiri.Components.Popups 1.3
 import QtBluetooth 5.4
 import Shareplugin 0.1
 import Lomiri.Content 1.3
@@ -41,6 +43,37 @@ Window {
 
         property var fileNames: []
         property bool peerSelected: false
+
+        Timer {
+            id: startupCheckTimer
+            interval: 500
+            running: false
+            repeat: false
+            onTriggered: {
+                if (root.fileNames.length === 0) {
+                    console.log("SharePlugin launched directly without files - showing warning")
+                    PopupUtils.open(directLaunchWarningDialog)
+                }
+            }
+        }
+
+        Component {
+            id: directLaunchWarningDialog
+            Dialog {
+                id: dialog
+                title: i18n.tr("Wrong Launch Method")
+                text: i18n.tr("This plugin should not be started directly from the App Drawer.\n\nPlease use the Share button when viewing a file to send it via Bluetooth.")
+
+                Button {
+                    text: i18n.tr("Close")
+                    color: LomiriColors.orange
+                    onClicked: {
+                        PopupUtils.close(dialog)
+                        Qt.quit()
+                    }
+                }
+            }
+        }
 
         ListModel {
             id: deviceListModel
@@ -76,7 +109,12 @@ Window {
                     tmp.push(filePath);
                 }
                 root.fileNames = tmp
+                startupCheckTimer.stop()
             }
+        }
+
+        Component.onCompleted: {
+            startupCheckTimer.start()
         }
 
         Connections {
