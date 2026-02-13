@@ -1,5 +1,5 @@
 # Roadmap for `ratatoskr` app
-(pan, v5, 12/02/2026)
+(pan, v6, 13/02/2026)
 
 
 ## Generalities
@@ -26,7 +26,7 @@
 - [x] Rename "Bluetooth" desktop icon to "BT Plugin"
 - [ ] Find way of hiding plugin icon on desktop -- may require to redesign
   plugin as Headless ContentHub peer (see trace from Sprint #006)
-- [ ] Get rid of 'unconfined' template in AA profile (may require platform 
+- [x] Get rid of 'unconfined' template in AA profile (may require platform 
   changes)
 - [ ] If at all possible, the list should also allow to identify the devices
   that are already paired and/or connected over Bluetooth

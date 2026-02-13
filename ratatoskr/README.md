@@ -4,7 +4,13 @@ Bluetooth File Transfer for Ubuntu Touch 20.04
 
 ## Description
 
-Ratatoskr is a Bluetooth file transfer application for Ubuntu Touch, with a primary focus on sending contacts (VCF cards) to Bluetooth car kits. It also supports bi-directional file transfer with PCs.
+Ratatoskr is a Bluetooth file transfer application for Ubuntu Touch, with a 
+primary focus on sending contacts (VCF cards) to Bluetooth car kits. It also 
+supports bi-directional file transfer with PCs.
+
+The app is called after the mischievous, gossipy squirrel in Norse mythology 
+who inhabits the world tree, Yggdrasil. He seemed like a worthy companion to 
+Harald Bluetooth ;-)
 
 ## Features
 
@@ -22,17 +28,53 @@ This application is based on 'ubtd' (Bluetooth File Transfer) originally develop
 
 Adapted and extended as 'Ratatoskr' by Philippe Andersson for Les Ateliers du Heron, 2025.
 
+## Usage guidelines
+
+### Sending files / vCards
+
+- pair with remote device and connect to it through System Settings
+- open appropriate application and access desired data (e.g. File Manager for
+  regular files or Contacts for vCards)
+- left-swipe on data item, tap Share icon
+- on "Open With" screen, select BT Plugin
+- tap desired target in device list (paired devices are usually displayed 
+  closed to the top)
+- the target device may prompt to accept the transfer
+- a progress bar will appear during transfer and a green button will take its
+  place when the transfer is complete
+  
+**Please note:** if you are surrounded by a large number of BT devices, there
+may be a lag between tapping the target device in the list and the actual start
+of the file transfer.
+
+### Receiving files
+
+- pair with remote device and connect to it through System Settings
+- start Ratatoskr
+- on remote device, share file to phone over BT
+- the file appears on the main Ratatoskr screen (with name and a small 
+  thumbnail)
+- left-swipe on the file, tap Download icon
+- on "Open With" screen, select File Manager
+- navigate to desired folder, validate with 'V' button
+- the incoming file is copied to the selected folder
+
+Once done, the incoming file can be deleted from the Ratatoskr cache:
+
+- return to Ratatoskr main page
+- right-swipe on the file, tap Delete icon
+
 ## Build Instructions
 
 ```bash
 cd ratatoskr/
-clickable build --arch=arm64
+./build.sh build --arch=arm64
 ```
 
 ## Run in Desktop Mode
 
 ```bash
-clickable desktop
+./build.sh desktop
 ```
 
 ## Technical Details
