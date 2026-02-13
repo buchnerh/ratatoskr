@@ -1,5 +1,5 @@
 /*==========================================================
- * Program : main.cpp              Project : ratatoskr
+ * Program : main.cpp                    Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-02-11
  * Version : 0.0.6

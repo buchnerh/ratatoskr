@@ -1,5 +1,5 @@
 /*==========================================================
- * Program : transfer.cpp              Project : ratatoskr
+ * Program : transfer.cpp                Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2025-12-18
  * Version : 0.0.1
@@ -134,6 +134,7 @@ Transfer::Status Transfer::statusStringToStatus(const QString &statusString)
 
 void Transfer::propertiesChanged(const QString &interface, const QVariantMap &changedProperties, const QStringList &invalidatedProperties)
 {
+    // Next message is much too chatty -- keep disabled unless needed
     //qDebug() << "properties changed" << interface << changedProperties << invalidatedProperties;
     if (interface != "org.bluez.obex.Transfer1") {
         return;

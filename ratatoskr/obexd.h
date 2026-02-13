@@ -1,5 +1,5 @@
 /*==========================================================
- * Program : obexd.h              Project : ratatoskr
+ * Program : obexd.h                     Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-01-15
  * Version : 0.0.4

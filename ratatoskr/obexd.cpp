@@ -1,5 +1,5 @@
 /*==========================================================
- * Program : obexd.cpp              Project : ratatoskr
+ * Program : obexd.cpp                   Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-02-12
  * Version : 0.0.6
@@ -61,7 +61,7 @@ int Obexd::rowCount(const QModelIndex &parent) const
 
 QVariant Obexd::data(const QModelIndex &index, int role) const
 {
-//    qDebug() << "asked for data" << index.row() << role << m_transfers.count();
+    //qDebug() << "asked for data" << index.row() << role << m_transfers.count();
     switch(role) {
     case RoleFilename:
         return m_transfers.at(index.row())->filename();

@@ -2,16 +2,16 @@
  * Program : main.cpp                    Project : ratatoskr
  * Author  : Philippe Andersson + Copilot CLI.
  * Date    : 2026-02-12
- * Version : 0.0.3
+ * Version : 0.0.4
  * Notice  : (c) Les Ateliers du Heron, 2025
  * License : GNU GPL v3 or later
  * Comment : Main application entry point.
- *           Based on ubtd by Michael Zanetti and Ian L.
+ *           Based on 'ubtd' by Michael Zanetti and Ian L.
  * Modification History:
  * - 2025-12-18 (0.0.1) : Initial adaptation from ubtd-20.04.
- * - 2025-12-19 (0.0.1) : Added BluetoothManager, DeviceDiscovery, OBEXTransfer.
- * - 2026-02-11 (0.0.2) : Added version logging at startup.
- * - 2026-02-12 (0.0.3) : Removed unused BluetoothManager and OBEXTransferService.
+ * - 2025-12-19 (0.0.2) : Added BluetoothManager, DeviceDiscovery, OBEXTransfer.
+ * - 2026-02-11 (0.0.3) : Added version logging at startup.
+ * - 2026-02-12 (0.0.4) : Removed unused BluetoothManager and OBEXTransferService.
  *========================================================*/
 
 #include <QGuiApplication>

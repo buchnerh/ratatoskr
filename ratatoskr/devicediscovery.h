@@ -2,12 +2,12 @@
  * Program : devicediscovery.h           Project : ratatoskr
  * Author  : Philippe Andersson + Copilot CLI.
  * Date    : 2025-12-19
- * Version : 0.01
+ * Version : 0.0.1
  * Notice  : (c) Les Ateliers du Heron, 2025
  * License : GNU GPL v3 or later
  * Comment : Bluetooth device discovery service using Qt D-Bus.
  * Modification History:
- * - 2025-12-19 (0.01) : Initial release.
+ * - 2025-12-19 (0.0.1) : Initial release.
  *========================================================*/
 
 #ifndef DEVICEDISCOVERY_H

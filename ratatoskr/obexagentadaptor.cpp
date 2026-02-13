@@ -1,5 +1,5 @@
 /*==========================================================
- * Program : obexagentadaptor.cpp              Project : ratatoskr
+ * Program : obexagentadaptor.cpp        Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2025-12-18
  * Version : 0.0.1

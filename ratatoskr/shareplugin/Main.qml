@@ -1,5 +1,5 @@
 /*==========================================================
- * Program : Main.qml              Project : ratatoskr
+ * Program : Main.qml                    Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-02-12
  * Version : 0.1.5
