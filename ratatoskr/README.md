@@ -9,10 +9,10 @@ primary focus on sending contacts (VCF cards) to Bluetooth car kits. It also
 supports bi-directional file transfer with PCs.
 
 The app is named after the mischievous, gossipy squirrel in Norse mythology 
-who inhabits the world tree, Yggdrasil and carries slanderous messages between 
-the eagles perched atop it and the dragon Níðhöggr who dwells beneath  
+who inhabits the world tree, Yggdrasil, and carries slanderous messages between 
+the eagles perched atop it and the dragon Níðhöggr who dwells beneath 
 the roots of the tree. He seemed to me like a worthy companion to Harald 
-Bluetooth (provided he doesn't distort your files too much) ;-)
+Bluetooth (hoping he doesn't distort your files too much) ;-)
 
 ## Features
 
@@ -28,12 +28,13 @@ This application is based on 'ubtd' (Bluetooth File Transfer) originally develop
 - **Michael Zanetti** <michael.zanetti@canonical.com> - Original development
 - **Ian L.** (floop2/fourloop2002) - Ubuntu Touch 16.04 and 20.04 ports
 
-Adapted and extended as 'Ratatoskr' by Philippe Andersson for Les Ateliers du Heron, 2025.
+Adapted and extended as 'Ratatoskr' by Philippe Andersson and Copilot CLI for 
+Les Ateliers du Héron, 2025.
+
+Original *Ratatoskr* icon built by *ChatGPT*.
 
 The description of the Norse mythological character is borrowed from its
 [Wikipedia page](https://en.wikipedia.org/wiki/Ratatoskr).
-
-Original *Ratatoskr* icon built by *ChatGPT*.
 
 ## Usage guidelines
 
@@ -52,7 +53,7 @@ Original *Ratatoskr* icon built by *ChatGPT*.
   
 **Please note:** if you are surrounded by a large number of BT devices, there
 may be a lag (of up to several seconds) between tapping the target device in 
-the list and the actual start of the file transfer.
+the list and the actual start of the file transfer -- please be patient.
 
 ### Receiving files
 
@@ -77,6 +78,8 @@ Once done, the incoming file can be deleted from the Ratatoskr cache:
 cd ratatoskr/
 ./build.sh build --arch=arm64
 ```
+
+(adapt target architecture as needed).
 
 ## Run in Desktop Mode
 
