@@ -1,5 +1,5 @@
 # Roadmap for `ratatoskr` app
-(pan, v6, 13/02/2026)
+(pan, v7, 16/02/2026)
 
 
 ## Generalities
@@ -7,7 +7,7 @@
 - [x] Contact Michael Zanetti to determine appropriate license
 - [x] Update ADR-005 with final display issue resolution (`Window` object)
 - [x] Comment code where needed
-- [ ] Synthetise ADRs where possible
+- [x] Synthetise ADRs where possible
 
 ## Enhancements
 
