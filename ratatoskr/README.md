@@ -61,7 +61,7 @@ the list and the actual start of the file transfer -- please be patient.
 - start Ratatoskr app
 - on remote device, share file to phone over BT
 - the file appears on the main Ratatoskr screen (with its name and a small 
-  thumbnail)
+  thumbnail if applicable)
 - left-swipe on the file, tap Download icon
 - on "Open With" screen, select File Manager
 - navigate to desired folder, validate with 'V' button
