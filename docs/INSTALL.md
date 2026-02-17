@@ -39,4 +39,4 @@ If you encounter issues:
 - with the SharePlugin:
   - Check for AppArmor denials: `sudo journalctl | grep apparmor | grep DENIED | grep ratatoskr`
 
-Report issues at: [project repository URL]
+Report issues at: [GitHub 'ratatoskr' project](https://github.com/petroniusniger/ratatoskr)

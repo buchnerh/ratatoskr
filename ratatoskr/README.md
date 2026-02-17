@@ -94,6 +94,10 @@ cd ratatoskr/
 - Uses D-Bus interface to bluez-obexd for receiving files
 - Requires Ubuntu Touch 20.04 framework
 
+## Support
+
+Report issues at: [GitHub 'ratatoskr' project](https://github.com/petroniusniger/ratatoskr)
+
 ## License
 
 Copyright (C) 2025  Philippe Andersson
