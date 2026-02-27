@@ -12,5 +12,5 @@ The proposed approach is to remove any leading path element from the file
 name (similar to what the `basename` command does when called with the file
 name as only argument).
 
-If a path element had to be removed (i.e. "original name" != "sanitized name",
-that event should be logged).
+If a path element had to be removed (i.e. "original name" != "sanitized name"),
+that event should be logged.
