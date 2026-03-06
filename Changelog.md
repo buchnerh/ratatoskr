@@ -7,7 +7,8 @@
 - Added confirmation pop-up to main 'ratatoskr' app to allow accepting or 
   rejecting incoming file transfer (Github 
   [issue #6](https://github.com/petroniusniger/ratatoskr/issues/6)).
-- Added `Changelog.md` (this file). Pop-up dialog shows file name and size.
+  Pop-up dialog shows file name and size.
+- Added `Changelog.md` (this file).
 - Sanitize path for incoming files in main 'ratatoskr' app (Github 
   [issue #12](https://github.com/petroniusniger/ratatoskr/issues/12)).
 
