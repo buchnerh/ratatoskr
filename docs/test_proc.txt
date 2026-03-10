@@ -1,6 +1,6 @@
 Ratatoskr Project Test Procedure
 ================================
-(pan, 09/03/2026)
+(pan, 10/03/2026)
 
 
 *************************************************************
@@ -240,22 +240,99 @@ Start time: <...>
   - neighbouring device list starts populating                              [ ]
   - newly discovered devices are logged by MAC                              [ ]
   - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
   > tap laptop name in device list
   - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
   - confirmation dialog pops-up on laptop                                   [ ]
   > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
   - successful transfer is confirmed on laptop                              [ ]
-> Terminate 'BT Plugin', 'File Manager' and collect relevant journal events
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+> Terminate 'File Manager' and collect relevant journal events
 End time: <...>
 
 c. Push several contacts to car kit (nominal case / full workflow)
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Start time: <...>
+> Using 'System Settings', connect car kit via Bluetooth (if not automatic)
+> On car Media Center, go to Menu | Phone | Contacts
+> Launch 'Contacts' app, navigate to desired contact, swipe left selected
+  contact, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap car kit name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - "Transferring..." message + progress bar diplayed on phone (too quick)  [ ]
+  - new contact appears in the car kit list                                 [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'Contacts'                  [ ]
+  > select other contact, swipe left, tap 'Share' icon then tap 'BT Plugin' in 
+    the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap car kit name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - "Transferring..." message + progress bar diplayed on phone (too quick)  [ ]
+  - new contact appears in the car kit list                                 [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'Contacts'                  [ ]
+> Terminate 'File Manager' and collect relevant journal events
 End time: <...>
 
 d. Push several files to laptop, laptop rejects 1st one
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'File Manager' app, navigate to desired folder, swipe left selected
+  file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Cancel"
+  - "Transfer failed" message displayed on phone                            [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+  > swipe left another file, tap 'Share' icon then tap 'BT Plugin' in the "Open 
+    with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
+  - successful transfer is confirmed on laptop                              [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+> Terminate 'File Manager' and collect relevant journal events
 End time: <...>
 
 
