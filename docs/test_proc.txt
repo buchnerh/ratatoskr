@@ -1,0 +1,582 @@
+Ratatoskr Project Test Procedure
+================================
+(pan, 11/03/2026)
+
+
+*************************************************************
+* Played by .......: <name>
+* Target release ..: <version>
+* Tested build ....: <verstring>
+* Played on .......: <host / model>
+* Host OS version .: <OS>
+* Host CPU arch ...: <arch>
+* Test run scope...: [full/partial]
+* Started on ......: <date - time>
+* Finished on .....: <date - time>
+*************************************************************
+
+To be executed before each official release of the project.
+
+Test results:
+-------------
+- [v]: Pass
+- [x]: Fail
+- [o]: VBA
+- [-]: Skip
+- [/]: N/A
+
+
+-------------------------------------------------------------------------------
+A./ Ratatoskr application package
+    ooooooooooooooooooooooooooooo
+
+
+0./ Installation procedure
+    ----------------------
+    
+a. First installation
+   ~~~~~~~~~~~~~~~~~~
+> Build project source for both target arch (arm64, armhf)
+  - no errors or warning during build (exc. for review requirement)         [ ]
+  - expected '.click packages are produced                                  [ ]
+  - version string included in package names is the expected one            [ ]
+> Copy resulting '.click' package to phone over USB
+> Install package by tapping it in File Manager
+  - warning is issues as package doesn't come from online repo              [ ]
+  > accept and continue
+  - installation reported as successful                                     [ ]
+  - 'ratatoskr' listed by OpenStore app amongst installed packages          [ ]
+  - installed app list shows 'ratatoskr' icon                               [ ]
+  > open 'ratatoskr' entry in installed app list
+    - package description shows 'ratatoskr' icon                            [ ]
+    - package description contains expected version string                  [ ]
+  > close OpenStore app
+  - 'ratatoskr' icon shown on App Drawer                                    [ ]
+  - 'BT Plugin' icon shown on Add Drawer                                    [ ]
+
+b. Clean uninstall
+   ~~~~~~~~~~~~~~~
+> Start 'OpenStore' app, open "Installed Apps" page, tap 'ratatoskr' entry,
+  tap 'trash can' icon in upper-right corner
+  - a confirmation pop-up is displayed                                      [ ]
+  > tap "Remove"
+  - app is reported as successfully removed                                 [ ]
+  - 'ratatoskr' is no longer listed amongst installed apps                  [ ]
+  - 'ratatoskr' app/icon are no longer displayed on App Drawer              [ ]
+  - 'BT Plugin' app/icon are no longer displayed on App Drawer              [ ]
+  > start 'File Manager' app, navigate to any folder, swipe left any file, tap 
+    'Share' icon
+  - 'BT Plugin' icon no longer displayed in the "Open with" dialog          [ ]
+
+c. In-place upgrade
+   ~~~~~~~~~~~~~~~~
+> Build project source for both target arch (arm64, armhf)
+  - no errors or warning during build (exc. for review requirement)         [ ]
+  - expected '.click packages are produced                                  [ ]
+  - version string included in package names is the expected one            [ ]
+> Copy resulting '.click' package to phone over USB
+> Install package by tapping it in File Manager
+  - warning is issues as package doesn't come from online repo              [ ]
+  > accept and continue
+  - installation reported as successful                                     [ ]
+  - 'ratatoskr' listed by OpenStore app amongst installed packages          [ ]
+  - installed app list shows 'ratatoskr' icon                               [ ]
+  > open 'ratatoskr' entry in installed app list
+    - package description shows 'ratatoskr' icon                            [ ]
+    - package description contains expected version string                  [ ]
+  > close OpenStore app
+  - 'ratatoskr' icon shown on App Drawer                                    [ ]
+  - 'BT Plugin' icon shown on Add Drawer                                    [ ]
+> Launch main 'ratatoskr' app
+  - files previously kept in the app cache are still present                [ ]
+> Use it to perform the below test procedure
+
+
+1./ Main App ('ratatoskr')
+    ----------------------
+
+- BT icon in upper-right corner leads to "Nearby Devices" screen            [ ]
+- "Nearby Devices" list is populated with paired devices                    [ ]
+- "Nearby Devices" list is scrollable                                       [ ]
+- Tapping "search" icon in upper-right corner also lists non-paired dev.    [ ]
+- Once tapped, "search" icon becomes "square"                               [ ] 
+- Tapping "square" icon in upper-right corner returns list to paired only   [ ]
+- Tapping '<' icon in upper-left corner returns to main screen              [ ]
+- Main screen lists any earlier files still present in cache                [ ]
+- File list on main screen is scrollable                                    [ ]
+- Thumbnail is shown where applicable                                       [ ]
+- Right-swipe on file shows 'delete' icon                                   [ ]
+- Left-swipe on file shows 'share' and 'download' icons                     [ ]
+
+a. Startup without OBEX daemon
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Ensure that 'obexd' process is stopped
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  - journal logs 'obexd' being started via D-Bus activation                 [ ]
+  - journal logs 'ratatoskr' registering with 'obexd-server'                [ ]
+  - ps confirms 'obexd' running                                             [ ]
+> Terminate 'ratatoskr' and collect relevant journal events
+End time: <...>
+
+b. Start with OBEX daemon running
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Ensure that 'obexd' process is running
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  - journal logs 'obexd' being detected                                     [ ]
+  - journal logs 'ratatoskr' registering with 'obexd-server'                [ ]
+  - ps confirms 'obexd' running                                             [ ]
+> Terminate 'ratatoskr' and collect relevant journal events
+End time: <...>
+
+c. Accept incoming file (nominal case / full workflow)
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+> On laptop, open Dolphin, right-click on any file, select "Send via BT", in 
+  the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'accept' button
+  - transfer progress completes on laptop                                   [ ]
+  - file name appears in list on 'ratatoskr' main screen                    [ ]
+  - transfer acceptance is logged                                           [ ]
+  - incoming file name and size are logged                                  [ ]
+  - log does not contain "sanitized" event                                  [ ]
+  > swipe left on received file, tap download
+  - "Open With" window appears                                              [ ]
+  - "Open With" window lists "File Manager" as handler                      [ ]
+  > tap "File Manager", navigate to "Downloads" folder, tap 'V' icon in 
+    upper-right corner
+  - incoming file is copied to selected folder                              [ ]
+> Terminate 'ratatoskr', diconnect laptop and collect relevant journal events
+End time: <...>
+
+d. Accept/Reject successive transfers
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+> On laptop, open Dolphin, right-click on any file, select "Send via BT", in 
+  the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'accept' button
+  - transfer progress completes on laptop                                   [ ]
+  - file name appears in list on 'ratatoskr' main screen                    [ ]
+  - transfer acceptance is logged                                           [ ]
+  - incoming file name and size are logged                                  [ ]
+  - log does not contain "sanitized" event                                  [ ]
+  > on laptop, in Dolphin, right-click on another file, select "Send via BT",
+    in the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'reject' button
+  - "transfer failed" pop-up is displayed on laptop                         [ ]
+  - no new file added to the list on 'ratatoskr' main screen                [ ]
+  - transfer rejection is logged                                            [ ]
+  > on laptop, in Dolphin, right-click on a 3rd file, select "Send via BT", in 
+    the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'accept' button
+  - transfer progress completes on laptop                                   [ ]
+  - file name appears in list on 'ratatoskr' main screen                    [ ]
+  - transfer acceptance is logged                                           [ ]
+  - incoming file name and size are logged                                  [ ]
+  - log does not contain "sanitized" event                                  [ ]
+> Terminate 'ratatoskr', diconnect laptop and collect relevant journal events
+End time: <...>
+
+e. Transfer large file
+   ~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', check available storage space on phone
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+> On laptop, open Dolphin, right-click on a file larger than 100MB but smaller
+  than remaining storage space on phone, select "Send via BT", in the pop-up 
+  dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'accept' button
+  - progress bar displayed on phone during transfer                         [ ]
+  - transfer progress completes on laptop                                   [ ]
+  - file name appears in list on 'ratatoskr' main screen                    [ ]
+  - transfer acceptance is logged                                           [ ]
+  - incoming file name and size are logged                                  [ ]
+  - log does not contain "sanitized" event                                  [ ]
+  > open shell, navigate to cache folder:
+    '~/.cache/ratatoskr.petroniusniger/HubIncoming/'
+  > request checksum of newly transferred file
+  - checksum is identical to original one on laptop                         [ ]
+> Terminate 'ratatoskr', diconnect laptop and collect relevant journal events
+End time: <...>
+
+f. Transfer file with Unicode chars in filename
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+> On laptop, open Dolphin, right-click on a file whose name contains accented
+  characters, Unicode characters (such as EUR symbol) and spaces, select "Send 
+  via BT", in the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'accept' button
+  - transfer progress completes on laptop                                   [ ]
+  - correct file name appears in list on 'ratatoskr' main screen            [ ]
+  - transfer acceptance is logged                                           [ ]
+  - incoming file name and size are logged                                  [ ]
+  - log does not contain "sanitized" event                                  [ ]
+  > open shell, navigate to cache folder:
+    '~/.cache/ratatoskr.petroniusniger/HubIncoming/'
+  > type 'ls'
+  - file name is identical to original one on laptop                        [ ]
+  > request checksum of newly transferred file
+  - checksum is identical to original one on laptop                         [ ]
+> Terminate 'ratatoskr', diconnect laptop and collect relevant journal events
+End time: <...>
+
+g. Share received file
+   ~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  > swipe left on one of the listed files, tap "Share" icon then tap 'BT Plugin'
+    in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
+  - successful transfer is confirmed on laptop                              [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to "Open with" dialog          [ ]
+> Close diaog, terminate 'ratatoskr', diconnect laptop and collect relevant 
+  journal events
+End time: <...>
+
+h. Correct file-type icons displayed
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Launch 'ratatoskr' app after having received at least one file of each main 
+  type (image, PDF, audio, video, archive, text)
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  - for each file in the list (exc. 'txt'), icon is expected one            [ ]
+  - for each image file in the list, icon is replaced by thumbnail          [ ]
+> Terminate 'ratatoskr' and collect relevant journal events
+End time: <...>
+
+i. Delete file from 'ratatoskr' cache
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  > swipe right on one of the listed files, tap 'delete' icon
+  - the file disappears from the list                                       [ ]
+  > open shell, navigate to cache folder:
+    '~/.cache/ratatoskr.petroniusniger/HubIncoming/'
+  > list folder content
+  - the file is confirmed to be removed                                     [ ]
+> Terminate 'ratatoskr' and collect relevant journal events
+End time: <...>
+
+j. Start with BT OFF / Accept incoming file
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', turn BT transceiver OFF
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  - journal logs 'org.bluez' error about "Not Powered"                      [ ]
+> Keep 'ratatoskr' running
+> Using 'System Settings', turn BT transceiver ON, connect laptop
+  - 'ratatoskr' keeps running                                               [ ]
+> On laptop, open Dolphin, right-click on any file, select "Send via BT", in 
+  the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  > tap 'accept' button
+  - transfer progress completes on laptop                                   [ ]
+  - file name appears in list on 'ratatoskr' main screen                    [ ]
+  - transfer acceptance is logged                                           [ ]
+  - incoming file name and size are logged                                  [ ]
+  - log does not contain "sanitized" event                                  [ ]
+  > swipe left on received file, tap download
+  - "Open With" window appears                                              [ ]
+  - "Open With" window lists "File Manager" as handler                      [ ]
+  > tap "File Manager", navigate to "Downloads" folder, tap 'V' icon in 
+    upper-right corner
+  - incoming file is copied to selected folder                              [ ]
+> Terminate 'ratatoskr', diconnect laptop and collect relevant journal events
+End time: <...>
+
+
+2./ SharePlugin component ('BT Plugin')
+    -----------------------------------
+
+a. Start 'BT Plugin' directly from App Drawer
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Launch 'BT Plugin' app directly from App Drawer
+  - 'Share via Bluetooth' plugin starts as expected                         [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  > wait for up to 2 min.
+  - a pop-up appears with a warning about "wrong launch method"             [ ]
+  > tap "Close" button
+  - 'BT Plugin' app terminates                                              [ ]
+> Collect relevant journal events
+End time: <...>
+
+b. Push file to laptop (nominal case / full workflow)
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'File Manager' app, navigate to desired folder, swipe left selected
+  file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
+  - successful transfer is confirmed on laptop                              [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+> Terminate 'File Manager' and collect relevant journal events
+End time: <...>
+
+c. Push several contacts to car kit (nominal case / full workflow)
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect car kit via Bluetooth (if not automatic)
+> On car Media Center, go to Menu | Phone | Contacts
+> Launch 'Contacts' app, navigate to desired contact, swipe left selected
+  contact, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap car kit name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - "Transferring..." message + progress bar diplayed on phone (too quick)  [ ]
+  - new contact appears in the car kit list                                 [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'Contacts'                  [ ]
+  > select other contact, swipe left, tap 'Share' icon then tap 'BT Plugin' in 
+    the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap car kit name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - "Transferring..." message + progress bar diplayed on phone (too quick)  [ ]
+  - new contact appears in the car kit list                                 [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'Contacts'                  [ ]
+> Terminate 'File Manager' and collect relevant journal events
+End time: <...>
+
+d. Push several files to laptop, laptop rejects 1st one
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'File Manager' app, navigate to desired folder, swipe left selected
+  file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Cancel"
+  - "Transfer failed" message displayed on phone                            [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+  > swipe left another file, tap 'Share' icon then tap 'BT Plugin' in the "Open 
+    with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
+  - successful transfer is confirmed on laptop                              [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+> Terminate 'File Manager' and collect relevant journal events
+End time: <...>
+
+e. Bluetooth powered off when SharePlugin launches
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', turn BT transceiver OFF
+> Launch 'File Manager' app, navigate to desired folder, swipe left selected
+  file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - device list remains empty                                               [ ]
+  - journal logs 'org.bluez' error about "Not Powered"                      [ ]
+> Keep 'BT Plugin' running
+> Using 'System Settings', turn BT transceiver ON, connect laptop
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
+  - successful transfer is confirmed on laptop                              [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+> Terminate 'File Manager' and collect relevant journal events
+End time: <...>
+
+f. Device list scrollability
+   ~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Run this test in an environment with a reasonable number of nearby BT devices
+> Launch 'File Manager' app, navigate to desired folder, swipe left selected
+  file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  > wait for the list contents to stabilise
+  - the device list is scrollable                                           [ ]
+  - newly discovered devices continue to be appended while scrolling        [ ]
+End time: <...>
+
+
+B./ Ancillary scripts
+    ooooooooooooooooo
+
+
+1./ 'build.sh'
+    ----------
+    
+a. Syntax
+   ~~~~~~
+> run 'shellcheck build.sh'
+- no error or warning are reported                                          [ ]
+    
+b. Produces version file before invoking clickable
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> run './build.sh build' in 'ratatoskr/' sub-folder
+  - VERSION.txt is regenerated before the Docker build container is invoked [ ]
+  - VERSION.txt content matches the one embedded in the .click package name [ ]
+
+
+2./ 'get-version.sh'
+    ----------------
+    
+a. Syntax
+   ~~~~~~
+> run 'shellcheck get-version.sh'
+- no error or warning are reported                                          [ ]
+
+b. Detects tagged commit
+   ~~~~~~~~~~~~~~~~~~~~~
+> in the working copy, check out an existing git tag
+> run './get-version.sh' in 'ratatoskr/' sub-folder
+  - script outputs a string matching 'vX.Y.Z' (no timestamp suffix)         [ ]
+
+c. Detects untagged commit
+   ~~~~~~~~~~~~~~~~~~~~~~~
+> in the working copy, check out a dev. branch (or 'main' if merges occurred 
+  since last tag)
+> run './get-version.sh' in 'ratatoskr/' sub-folder
+  - script outputs a string matching 'vX.Y.Z.YYMMDDHHMMSS'                  [ ]
+
+
+###############################################################################
+Test cases postponed for the time being
+---------------------------------------
+[main app]
+- process incoming file with directory traversal attempt
+  (may require writing custom rogue client)
+  
+- move phone out of BT range during transfer
+  (with a range varying between 10 and 240m, that may not be practical)
+  (potential alternative: turn BT OFF during large file transfer)
+  
+[BT plugin]
+- ContentHub passes an empty file list if the share intent can be
+  triggered with no file selected (or the user cancels before sharing)
+  (don't know how to trigger that situation)
+  
+- discovery continues after first scan completes
+  (unclear if/when scan completes)
+  
