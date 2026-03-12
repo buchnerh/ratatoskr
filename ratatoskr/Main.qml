@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml                    Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-03-06
- * Version : 0.0.3
+ * Date    : 2026-03-12
+ * Version : 0.0.4
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -11,6 +11,7 @@
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
  * - 2026-02-17 (0.0.2) : Changed app author name to match GitHub account.
  * - 2026-03-06 (0.0.3) : Added incoming transfer confirmation dialog.
+ * - 2026-03-12 (0.0.4) : Added delete confirmation dialog (issue #5).
  *========================================================*/
 
 import QtQuick 2.4
@@ -64,6 +65,35 @@ MainView {
                     obexd.rejectTransfer(dialogue.transferPath)
                     PopupUtils.close(dialogue)
                 }
+            }
+        }
+    }
+
+    // Confirmation dialog for deleting a received file
+    Component {
+        id: deleteConfirmDialog
+
+        Dialog {
+            id: deleteDialogue
+            property int fileIndex: -1
+            property string filename: ""
+
+            title: i18n.tr("Delete")
+            text: i18n.tr("Are you sure you want to permanently delete '%1'?").arg(deleteDialogue.filename)
+
+            Button {
+                text: i18n.tr("OK")
+                color: theme.palette.normal.negative
+                width: parent.width
+                onClicked: {
+                    obexd.deleteFile(deleteDialogue.fileIndex)
+                    PopupUtils.close(deleteDialogue)
+                }
+            }
+            Button {
+                text: i18n.tr("Cancel")
+                width: parent.width
+                onClicked: PopupUtils.close(deleteDialogue)
             }
         }
     }
@@ -165,7 +195,10 @@ MainView {
                             Action {
                                 iconName: "delete"
                                 text: i18n.tr("Delete")
-                                onTriggered: obexd.deleteFile(index)
+                                onTriggered: PopupUtils.open(deleteConfirmDialog, null, {
+                                    fileIndex: index,
+                                    filename: model.filename
+                                })
                             }
                         ]
                     }
