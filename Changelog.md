@@ -1,9 +1,10 @@
 # Changelog for project 'ratatoskr'
-(pan, 12/03/2026)
+(pan, 17/03/2026)
 
 
-## v0.1.1 (*upcoming*)
+## v0.1.1 (Mar. 17, 2026)
 
+- Updated test procedure as a result of its first formal execution.
 - Added confirmation dialog before deleting cached files in main app 
   (Github [issue #5](https://github.com/petroniusniger/ratatoskr/issues/5)).
   Updated test procedure accordingly.

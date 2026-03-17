@@ -71,7 +71,7 @@ the list and the actual start of the file transfer -- please be patient.
 Once done, the incoming file can be deleted from the Ratatoskr cache:
 
 - return to Ratatoskr main page
-- right-swipe on the file, tap Delete icon
+- right-swipe on the file, tap Delete icon, confirm
 
 ## Build Instructions
 
