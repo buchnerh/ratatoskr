@@ -1,14 +1,12 @@
 /*==========================================================
  * Program : <filename>.cpp              Project : ratatoskr
- * Author  : Michael Zanetti, Ian L., Philippe Andersson
+ * Author  : Philippe Andersson
  * Date    : <date modified>
  * Version : <file version>
- * Notice  : (c) Original work by Michael Zanetti, Canonical
- *           Adapted by Ian L. and Philippe Andersson
+ * Notice  : (c) Les Ateliers du Heron, 2026
  * License : GNU GPL v3 or later
  * Comment : <short desc of file content>.
- *           Based on 'ubtd' by Michael Zanetti and Ian L.
- *           Revived with the help of the Copilot CLI coding agent.
+ *           Created with the help of the Copilot CLI coding agent.
  * Modification History:
  * - <date created> (0.0.1) : Initial release.
  *========================================================*/

@@ -51,7 +51,9 @@ Ratatoskr consists of **two executables**:
 ## Code Style & File Headers
 
 - **Indentation**: 2 spaces (not tabs)
-- **File Headers**: Use template from `templates/header.cpp` for all new C++ files
+- **File Headers**: 
+  - Use template from `templates/header.cpp` for all C++/h/qml files inherited from 'ubtd'
+  - Use template from `templates/header_2.cpp` for all new C++/h/qml files
 - **Header Updates**: When modifying any source file:
   - Update the "Date" field to modification date
   - Update the "Version" field
@@ -61,12 +63,15 @@ Example header format:
 ```cpp
 /*==========================================================
  * Program : filename.cpp                Project : ratatoskr
- * Author  : Philippe Andersson + Copilot CLI.
+ * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-01-15
  * Version : 0.0.2
- * Notice  : (c) Les Ateliers du Heron, 2025
+ * Notice  : (c) Original work by Michael Zanetti, Canonical
+ *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : Brief description of file content.
+ *           Based on 'ubtd' by Michael Zanetti and Ian L.
+ *           Revived with the help of the Copilot CLI coding agent.
  * Modification History:
  * - 2025-12-18 (0.0.1) : Initial release.
  * - 2026-01-15 (0.0.2) : Added feature X.
@@ -113,10 +118,12 @@ Example header format:
 - ADR index maintained in `CLAUDE.md`
 
 ### Development Process
-- Work in sprints with dedicated branches: `sprint-XXX` (e.g., `sprint-001`, `sprint-002`)
-- **DO NOT** merge sprint branches to `master` - maintainer handles merges
+- Work in sprints with dedicated branches: `sprint-XXX` (e.g., `sprint-001`, `sprint-002`) during inception
+- Work in branches created from Github issues after first public release
+- **DO NOT** merge sprint / issue branches to `master` - maintainer handles merges
 - Semantic versioning: Currently targeting `0.0.1` (project inception)
 - Sprint documentation stored in `docs/sprint-XXX/` directories
+- all commits by Copilot feature a suitable `Co-developed-by:` git trailer
 
 ### Important ADRs
 - ADR-001: Bluetooth architecture strategy (based on ubtd-20.04)

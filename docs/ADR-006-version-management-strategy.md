@@ -2,7 +2,7 @@
 
 **Date:** 2026-02-11  
 **Status:** Accepted  
-**Author:** Philippe Andersson + Copilot CLI
+**Author:** Philippe Andersson
 
 ## Context
 

@@ -21,17 +21,20 @@ container managed by 'clickable'
 # Code Style
 
 - tab value = 2 spaces
-- use source file header from `templates/` folder
-- update last modification date and version history in header each time a 
-  source file is modified
+- use source file header from `templates/` folder:
+  - use template from `templates/header.cpp` for all C++/h/qml files inherited from 'ubtd'
+  - use template from `templates/header_2.cpp` for all new C++/h/qml files
+- update last modification date, version and version history in header each time 
+  a source file is modified
 
 # Project management
 
 - use ADR
 - store each ADR in the `docs/` folder 
 - keep an index of existing ADR in this file
-- work in sprint
-- we'll discuss the scope of each sprint before it begins
+- work in sprint during inception phase
+  - we'll discuss the scope of each sprint before it begins
+- once the software is officially released, further work is driven by Github issues
 
 ## ADR Index
 
@@ -45,12 +48,12 @@ container managed by 'clickable'
 # Versioning Strategy
 
 - use git
-- project is a local repository
+- project is a local repository during inception phase, pushed to Github prior to official release
 - use semantic versioning
 - during project inception, target version is called 0.0.1
 - development for each sprint will occur in a branch called `sprint-XXX` where 
-  `XXX` represents the sprint sequence number
+  `XXX` represents the sprint sequence number (inception phase)
+- once published, further development occurs in branches created in Github from issues
 - DO NOT merge in `master` branch -- I will take care of it at the end of each
-  sprint
-  
-
+  sprint / issue
+- all commits by Copilot feature a suitable `Co-developed-by:` git trailer

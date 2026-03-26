@@ -1,11 +1,12 @@
 /*==========================================================
  * Program : devicediscovery.cpp         Project : ratatoskr
- * Author  : Philippe Andersson + Copilot CLI.
+ * Author  : Philippe Andersson
  * Date    : 2025-12-19
  * Version : 0.0.1
  * Notice  : (c) Les Ateliers du Heron, 2025
  * License : GNU GPL v3 or later
  * Comment : Bluetooth device discovery service using Qt D-Bus.
+ *           Created with the help of the Copilot CLI coding agent.
  * Modification History:
  * - 2025-12-19 (0.0.1) : Initial release.
  *========================================================*/
