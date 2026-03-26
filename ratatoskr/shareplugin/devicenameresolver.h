@@ -1,11 +1,12 @@
 /*==========================================================
  * Program : devicenameresolver.h        Project : ratatoskr
- * Author  : Philippe Andersson + Copilot CLI.
+ * Author  : Philippe Andersson
  * Date    : 2026-02-05
  * Version : 0.0.3
  * Notice  : (c) Les Ateliers du Heron, 2025-2026
  * License : GNU GPL v3 or later
  * Comment : Resolves Bluetooth device MAC addresses to names.
+ *           Created with the help of the Copilot CLI coding agent.
  * Modification History:
  * - 2026-02-02 (0.0.1) : Initial release.
  * - 2026-02-02 (0.0.2) : Added D-Bus monitoring for dynamic name updates.

@@ -1,12 +1,14 @@
 /*==========================================================
  * Program : main.cpp                    Project : ratatoskr
- * Author  : Philippe Andersson + Copilot CLI.
+ * Author  : Michael Zanetti, Ian L., Philippe Andersson
  * Date    : 2026-02-17
  * Version : 0.0.5
- * Notice  : (c) Les Ateliers du Heron, 2025
+ * Notice  : (c) Original work by Michael Zanetti, Canonical
+ *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : Main application entry point.
  *           Based on 'ubtd' by Michael Zanetti and Ian L.
+ *           Revived with the help of the Copilot CLI coding agent.
  * Modification History:
  * - 2025-12-18 (0.0.1) : Initial adaptation from ubtd-20.04.
  * - 2025-12-19 (0.0.2) : Added BluetoothManager, DeviceDiscovery, OBEXTransfer.

@@ -7,6 +7,8 @@
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
  * Comment : OBEX agent implementation
+ *           Based on 'ubtd' by Michael Zanetti and Ian L.
+ *           Revived with the help of the Copilot CLI coding agent.
  * Modification History:
  * - 2025-12-18 (0.0.1) : Adapted from ubtd-20.04.
  * - 2026-02-12 (0.0.2) : Added comments explaining D-Bus deferred reply pattern.
