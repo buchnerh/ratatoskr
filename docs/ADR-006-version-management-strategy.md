@@ -1,7 +1,8 @@
 # ADR-006: Version Management Strategy
 
 **Date:** 2026-02-11  
-**Status:** Accepted  
+**Updated:** 2026-03-27  
+**Status:** Accepted (Amended)  
 **Author:** Philippe Andersson
 
 ## Context
@@ -63,17 +64,35 @@ The `BUILD_VERSION` macro will be available as a string literal at compile time.
    - Add `qDebug()` statement immediately after `QGuiApplication` initialization
    - Format: `"Ratatoskr SharePlugin" BUILD_VERSION "starting..."`
 
-3. Version generation (`ratatoskr/get-version.sh`):
-   - Script runs on host (where git is available) before Docker build
-   - Generates `VERSION.txt` with format: `vX.Y.Z.YYMMDDHHMMSS`
-   - CMakeLists.txt reads VERSION.txt and exposes as BUILD_VERSION macro
+3. Version generation is handled entirely by CMake inside the clickable
+   build container, using `git describe --tags` against the mounted
+   git repository.
 
-4. Build process (`ratatoskr/build.sh`):
-   - Wrapper script that calls `get-version.sh` before invoking clickable
-   - Ensures VERSION.txt is always regenerated with current timestamp
-   - Usage: `./build.sh build` or `./build.sh build --arch arm64`
+4. Build process: run `clickable build` (or `clickable build --arch arm64`)
+   directly from the `ratatoskr/` subfolder. No wrapper script is needed.
 
-**Important**: Always use `./build.sh` instead of calling `clickable` directly to ensure version timestamps are current.
+## Amendment (2026-03-27) — Issue #24
+
+The original implementation used a `build.sh` wrapper and `get-version.sh`
+script to work around git tags not being visible inside the clickable Docker
+container. Root cause analysis (Issue #24) revealed that clickable only
+mounts the directory containing `clickable.yaml`, not the full git
+repository root. Since `.git` lives one level above `clickable.yaml`,
+`git describe` failed inside the container.
+
+**Fix applied:**
+- Added `root_dir: ..` to `clickable.yaml` so the entire git repo root
+  (including `.git`) is mounted into the container
+- Added `src_dir: ${ROOT}/ratatoskr` to direct CMake to the correct
+  source directory
+- Added `prebuild: git config --global --add safe.directory ${ROOT}` to
+  handle the git ownership check (container runs as root, files owned by
+  host user)
+
+**Removed:**
+- `build.sh` wrapper script
+- `get-version.sh` host-side version generator
+- `VERSION.txt` intermediate file and its `.gitignore` entry
 
 ## Consequences
 
@@ -83,13 +102,12 @@ The `BUILD_VERSION` macro will be available as a string literal at compile time.
 - No manual version maintenance in code
 - Consistent versioning across both executables
 - Easy to identify build in logs
+- Standard `clickable build` workflow — no custom wrapper needed
 
 ### Negative
 - Requires git repository for builds (already a requirement)
 - Version only known at compile time (not modifiable at runtime)
 - Timestamp-based dev versions not semantic versioning compliant
-- **Developers must use `./build.sh` wrapper instead of calling `clickable` directly**
-- VERSION.txt must be regenerated before each build for accurate timestamps
 
 ### Neutral
 - Developers must use git tags for releases
@@ -98,3 +116,4 @@ The `BUILD_VERSION` macro will be available as a string literal at compile time.
 ## References
 - Root CMakeLists.txt lines 45-63 (version generation)
 - Sprint #010 scope: "App and SharePlugin log their version at startup"
+- Issue #24: Get rid of 'build.sh' wrapper
