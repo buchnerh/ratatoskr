@@ -4,7 +4,7 @@
 
 ## v0.1.2 (*upcoming*)
 
-- Git rid of `build.sh` and `get-version.sh` helper scripts and return to a 
+- Got rid of `build.sh` and `get-version.sh` helper scripts and return to a 
   standard build process (Github 
   [issue #24](https://github.com/petroniusniger/ratatoskr/issues/24)).
   Updated test procedure accordingly.
