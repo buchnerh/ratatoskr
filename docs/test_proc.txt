@@ -1,6 +1,6 @@
 Ratatoskr Project Test Procedure
 ================================
-(pan, 17/03/2026)
+(pan, 28/03/2026)
 
 
 *************************************************************
@@ -34,12 +34,21 @@ A./ Ratatoskr application package
 0./ Installation procedure
     ----------------------
     
-a. Successful build
-   ~~~~~~~~~~~~~~~~
+a. Successful build from dev. branch
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > Build project sources for both target arch (arm64, armhf)
   - no errors or warning during build (exc. for review requirement)         [ ]
   - expected '.click' packages are produced                                 [ ]
-  - version string included in package names is the expected one            [ ]
+  - version string included in package names = latest tag + timestamp       [ ]
+  - POT file updated, contains most recently added translatable strings     [ ]
+
+b. Successful build from tag
+   ~~~~~~~~~~~~~~~~~~~~~~~~~
+> Checkout latest official tag
+> Build project sources for both target arch (arm64, armhf)
+  - no errors or warning during build (exc. for review requirement)         [ ]
+  - expected '.click' packages are produced                                 [ ]
+  - version string included in package names = tag                          [ ]
   - POT file updated, contains most recently added translatable strings     [ ]
 
 b. Fresh installation
@@ -568,43 +577,6 @@ End time: <...>
 
 B./ Ancillary scripts
     ooooooooooooooooo
-
-
-1./ 'build.sh'
-    ----------
-    
-a. Syntax
-   ~~~~~~
-> run 'shellcheck build.sh'
-- no error or warning are reported                                          [ ]
-    
-b. Produces version file before invoking clickable
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> run './build.sh build' in 'ratatoskr/' sub-folder
-  - VERSION.txt is regenerated before the Docker build container is invoked [ ]
-  - VERSION.txt content matches the one embedded in the .click package name [ ]
-
-
-2./ 'get-version.sh'
-    ----------------
-    
-a. Syntax
-   ~~~~~~
-> run 'shellcheck get-version.sh'
-- no error or warning are reported                                          [ ]
-
-b. Detects tagged commit
-   ~~~~~~~~~~~~~~~~~~~~~
-> in the working copy, check out an existing git tag
-> run './get-version.sh' in 'ratatoskr/' sub-folder
-  - script outputs a string matching 'vX.Y.Z' (no timestamp suffix)         [ ]
-
-c. Detects untagged commit
-   ~~~~~~~~~~~~~~~~~~~~~~~
-> in the working copy, check out a dev. branch (or 'main' if merges occurred 
-  since last tag)
-> run './get-version.sh' in 'ratatoskr/' sub-folder
-  - script outputs a string matching 'vX.Y.Z.YYMMDDHHMMSS'                  [ ]
 
 
 ###############################################################################
