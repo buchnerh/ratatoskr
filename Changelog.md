@@ -1,9 +1,13 @@
 # Changelog for project 'ratatoskr'
-(pan, 26/03/2026)
+(pan, 28/03/2026)
 
 
 ## v0.1.2 (*upcoming*)
 
+- Got rid of `build.sh` and `get-version.sh` helper scripts and returned to a 
+  standard build process (Github 
+  [issue #24](https://github.com/petroniusniger/ratatoskr/issues/24)).
+  Updated test procedure accordingly.
 - Removed Copilot CLI from all authorship assignments. Fixed copyright 
   assignment in `./ratatoskr/main.cpp`. Created separate header templates for
   files inherited from 'ubtd' project and new ones, aligned all source files. 

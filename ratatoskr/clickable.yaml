@@ -1,3 +1,7 @@
 clickable_minimum_required: 8.0.0
 builder: cmake
 kill: ratatoskr
+root_dir: ..
+src_dir: ${ROOT}/ratatoskr
+build_dir: ${ROOT}/ratatoskr/build/${ARCH_TRIPLET}/app
+prebuild: git config --global --add safe.directory ${ROOT}

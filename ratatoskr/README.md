@@ -4,7 +4,7 @@ Bluetooth File Transfer for Ubuntu Touch 20.04
 
 ## Description
 
-*Ratatoskr* is a Bluetooth file transfer application for Ubuntu Touch, with a 
+*Ratatoskr* is a Bluetooth file transfer application for Ubuntu Touch, with an 
 added focus on sending contacts (VCF cards) to Bluetooth car kits. It also 
 supports bi-directional file transfer with PCs or other phones.
 
@@ -77,7 +77,7 @@ Once done, the incoming file can be deleted from the Ratatoskr cache:
 
 ```bash
 cd ratatoskr/
-./build.sh build --arch=arm64
+clickable build --arch=arm64
 ```
 
 (adapt target architecture as needed).
@@ -85,7 +85,7 @@ cd ratatoskr/
 ## Run in Desktop Mode
 
 ```bash
-./build.sh desktop
+clickable desktop
 ```
 
 ## Technical Details
