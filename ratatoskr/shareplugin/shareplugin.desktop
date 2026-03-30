@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=BT Plugin
 Exec=shareplugin
-Icon=shareplugin-assets/icon.svg
+Icon=shareplugin-assets/sp_BT_logo.svg
 Terminal=false
 Type=Application
 X-Ubuntu-Touch=true
