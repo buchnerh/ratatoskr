@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ratatoskr.petroniusniger\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 14:56+0000\n"
+"POT-Creation-Date: 2026-04-01 08:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,124 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ratatoskr.desktop.in.h:1
+#: Main.qml:40
+msgid "Incoming Bluetooth Transfer"
+msgstr ""
+
+#: Main.qml:41
+msgid "A device wants to send you a file."
+msgstr ""
+
+#: Main.qml:44
+#, qt-format
+msgid "File: <b>%1</b>"
+msgstr ""
+
+#: Main.qml:50
+#, qt-format
+msgid "Size: %1"
+msgstr ""
+
+#: Main.qml:55
+msgid "Accept"
+msgstr ""
+
+#: Main.qml:64
+msgid "Reject"
+msgstr ""
+
+#: Main.qml:83 Main.qml:199
+msgid "Delete"
+msgstr ""
+
+#: Main.qml:84
+#, qt-format
+msgid "Are you sure you want to permanently delete '%1'?"
+msgstr ""
+
+#: Main.qml:87
+msgid "OK"
+msgstr ""
+
+#: Main.qml:96
+msgid "Cancel"
+msgstr ""
+
+#: Main.qml:135 ratatoskr.desktop.in:4
+msgid "Bluetooth File Transfer"
+msgstr ""
+
+#: Main.qml:139 Main.qml:396
+msgid "Send File"
+msgstr ""
+
+#: Main.qml:163
+msgid "Received Files"
+msgstr ""
+
+#: Main.qml:169
+msgid "Files sent to your Ubuntu Touch device via Bluetooth will appear below."
+msgstr ""
+
+#: Main.qml:179
+msgid "Transfers:"
+msgstr ""
+
+#: Main.qml:212
+msgid "Share"
+msgstr ""
+
+#: Main.qml:223
+msgid "Save"
+msgstr ""
+
+#: Main.qml:347
+msgid "Attachment"
+msgstr ""
+
+#: Main.qml:400
+msgid "Scan"
+msgstr ""
+
+#: Main.qml:400
+msgid "Stop Scan"
+msgstr ""
+
+#: Main.qml:422
+msgid "Nearby Devices"
+msgstr ""
+
+#: Main.qml:428
+msgid "Scanning for devices..."
+msgstr ""
+
+#: Main.qml:428
+msgid "Tap scan to find nearby Bluetooth devices"
+msgstr ""
+
+#: Main.qml:469
+msgid "Paired"
+msgstr ""
+
+#: ratatoskr.desktop.in:3
 msgid "Ratatoskr"
 msgstr ""
 
-#: ratatoskr.desktop.in.h:2
-msgid "Bluetooth File Transfer"
+#: shareplugin/Main.qml:71
+msgid "Wrong Launch Method"
+msgstr ""
+
+#: shareplugin/Main.qml:72
+msgid ""
+"This plugin should not be started directly from the App Drawer.\n"
+"\n"
+"Please use the Share button when viewing a file to send it via Bluetooth."
+msgstr ""
+
+#: shareplugin/Main.qml:75 shareplugin/Main.qml:328
+msgid "Close"
+msgstr ""
+
+#: shareplugin/Main.qml:211
+msgid "Share via Bluetooth"
 msgstr ""

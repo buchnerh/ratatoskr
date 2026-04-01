@@ -1,0 +1,13 @@
+Main.qml
+main.cpp
+adapter.cpp
+obexd.cpp
+obexagent.cpp
+obexagentadaptor.cpp
+transfer.cpp
+devicediscovery.cpp
+shareplugin/Main.qml
+shareplugin/main.cpp
+shareplugin/bttransfer.cpp
+shareplugin/adapter.cpp
+shareplugin/devicenameresolver.cpp
