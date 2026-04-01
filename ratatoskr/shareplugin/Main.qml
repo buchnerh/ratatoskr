@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml                    Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-02-17
- * Version : 0.1.6
+ * Date    : 2026-04-01
+ * Version : 0.1.7
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -22,6 +22,7 @@
  * - 2026-02-12 (0.1.4) : Added warning dialog for direct launch from App Drawer.
  * - 2026-02-12 (0.1.5) : Added comments explaining timing and Bluetooth state management.
  * - 2026-02-17 (0.1.6) : Changed app author name to match GitHub account.
+ * - 2026-04-01 (0.1.7) : Wrapped transfer status strings in i18n.tr() (issue #20).
  *========================================================*/
 
 import QtQuick 2.4
@@ -311,9 +312,9 @@ Window {
                     Label {
                         Layout.fillWidth: true
                         wrapMode: Text.WordWrap
-                        text: btTransfer.error ? "Transfer failed."
-                                : btTransfer.finished ? (root.fileNames.length == 1 ? "File transferred." : "All files transferred.")
-                                : "Transferring..."
+                        text: btTransfer.error ? i18n.tr("Transfer failed.")
+                                : btTransfer.finished ? (root.fileNames.length == 1 ? i18n.tr("File transferred.") : i18n.tr("All files transferred."))
+                                : i18n.tr("Transferring...")
                         fontSize: "large"
                     }
 
