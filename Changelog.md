@@ -7,7 +7,9 @@
 - Fixed buildchain to correctly populate POT file. Replaced `intltool-extract` 
   with modern two-pass `xgettext` approach. Created `po/POTFILES.in` with 
   explicit list of all translatable source files. Provided first translation
-  (French). Updated test procedure accordingly. See Github 
+  (French). Updated test procedure accordingly. Wrapped missing strings in 
+  'i18n.tr()' calls, re-generated POT file and merged new strings in French PO
+  file. See Github 
   [issue #20](https://github.com/petroniusniger/ratatoskr/issues/20).
 - Renamed SharePlugin icon from `icon.svg` to `sp_BT_logo.svg`. Handled related 
   impacts. See Github [issue #23](https://github.com/petroniusniger/ratatoskr/issues/23).
