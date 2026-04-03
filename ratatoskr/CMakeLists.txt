@@ -106,16 +106,12 @@ target_link_libraries(${PROJECT_NAME} Qt5::Gui Qt5::Qml Qt5::Quick Qt5::QuickCon
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 # Translations
-file(GLOB_RECURSE I18N_SRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/po qml/*.qml qml/*.js)
-list(APPEND I18N_SRC_FILES ${DESKTOP_FILE_NAME}.in.h)
+# Read the list of translatable source files from po/POTFILES.in
+file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/po/POTFILES.in I18N_SRC_FILES)
 
 find_program(INTLTOOL_MERGE intltool-merge)
 if(NOT INTLTOOL_MERGE)
     message(FATAL_ERROR "Could not find intltool-merge, please install the intltool package")
-endif()
-find_program(INTLTOOL_EXTRACT intltool-extract)
-if(NOT INTLTOOL_EXTRACT)
-    message(FATAL_ERROR "Could not find intltool-extract, please install the intltool package")
 endif()
 
 add_custom_target(${DESKTOP_FILE_NAME} ALL

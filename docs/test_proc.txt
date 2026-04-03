@@ -1,6 +1,6 @@
 Ratatoskr Project Test Procedure
 ================================
-(pan, 28/03/2026)
+(pan, 01/04/2026)
 
 
 *************************************************************
@@ -37,6 +37,8 @@ A./ Ratatoskr application package
 a. Successful build from dev. branch
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > Build project sources for both target arch (arm64, armhf)
+  - all provided '*.po' files are compiled to '*.gmo'                       [ ]
+  - corresponding locale folders are populated with '*.mo' files            [ ]
   - no errors or warning during build (exc. for review requirement)         [ ]
   - expected '.click' packages are produced                                 [ ]
   - version string included in package names = latest tag + timestamp       [ ]
@@ -406,6 +408,45 @@ Start time: <...>
 > Terminate 'ratatoskr', diconnect laptop and collect relevant journal events
 End time: <...>
 
+k. Test internationalization
+   ~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Using 'System Settings', set your phone to one of the languages supported
+  by 'ratatoskr'
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'ratatoskr' app
+  - app starts as expected                                                  [ ]
+  - journal logs app version string at startup                              [ ]
+  - messages on the main screen are expressed in the selected language      [ ]
+> On laptop, open Dolphin, right-click on any file, select "Send via BT", in 
+  the pop-up dialog, select the UT phone in the list
+  - sending progress dialog appears on laptop                               [ ]
+  - confirmation pop-up with accept/reject buttons  appears on phone        [ ]
+  - confirmation pop-up displays correct incoming file name                 [ ]
+  - confirmation pop-up displays correct incoming file size                 [ ]
+  - confirmation text is expressed in the selected language                 [ ]
+  > tap 'accept' button
+  - file name appears in list on 'ratatoskr' main screen                    [ ]
+  - incoming file name and size are logged                                  [ ]
+  - transfer acceptance is logged                                           [ ]
+  - progress bar displayed on phone                                         [ ]
+  - transfer progress completes on laptop                                   [ ]
+  - log does not contain "sanitized" event                                  [ ]
+  - icon/thumbnail, status & received date added to item list               [ ]
+  > swipe right on one of the listed files, tap 'delete' icon
+  - a confirmation dialog is shown w/ 'OK' and 'Cancel' buttons             [ ]
+  - the dialog shows the correct file name                                  [ ]
+  - confirmation text is expressed in the selected language                 [ ]
+  > tap 'Cancel'
+  - the user is returned to the cached files list                           [ ]
+  - the selected file is still present                                      [ ]
+  > tap 'Bluetooth' icon in the upper right corner
+  - 'nearby devices' page opens                                             [ ]
+  - messages on the screen are expressed in the selected language           [ ]
+> Terminate 'ratatoskr', diconnect laptop, revert phone language setting and 
+  collect relevant journal events
+End time: <...>
+
 
 2./ SharePlugin component ('BT Plugin')
     -----------------------------------
@@ -572,6 +613,45 @@ Start time: <...>
   > wait for the list contents to stabilise
   - the device list is scrollable                                           [ ]
   - newly discovered devices continue to be appended while scrolling        [ ]
+End time: <...>
+
+g. Test internationalization
+   ~~~~~~~~~~~~~~~~~~~~~~~~~
+Start time: <...>
+> Launch 'BT Plugin' app directly from App Drawer
+  - 'Share via Bluetooth' plugin starts as expected                         [ ]
+  - journal logs app version string at startup                              [ ]
+  - neighbouring device list starts populating                              [ ]
+  > wait for up to 2 min.
+  - a pop-up appears with a warning about "wrong launch method"             [ ]
+  - warning text is expressed in the selected language                      [ ]
+  > tap "Close" button
+  - 'BT Plugin' app terminates                                              [ ]
+> Using 'System Settings', set your phone to one of the languages supported
+  by 'ratatoskr'
+> Using 'System Settings', connect laptop via Bluetooth
+> Launch 'File Manager' app, navigate to desired folder, swipe left selected
+  file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
+  - the 'Share via Bluetooth' plugin starts as expected                     [ ]
+  - journal logs app version string at startup                              [ ]
+  - messages on the plugin screen are expressed in the selected language    [ ]
+  - neighbouring device list starts populating                              [ ]
+  - newly discovered devices are logged by MAC                              [ ]
+  - resolved name is logged for each newly discovered device                [ ]
+  - devices whose name is based on MAC are skipped                          [ ]
+  > tap laptop name in device list
+  - name and full path of file to be shared (from cache) is logged          [ ]
+  - MAC addresss of target device is logged                                 [ ]
+  - confirmation dialog pops-up on laptop                                   [ ]
+  > click "Accept"
+  - "Transferring..." message + progress bar diplayed on phone              [ ]
+  - message text is expressed in the selected language                      [ ]
+  - successful transfer is confirmed on laptop                              [ ]
+  - "File transferred" message displayed on phone                           [ ]
+  - message text is expressed in the selected language                      [ ]
+  > tap "Close" button
+  - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
+> Terminate 'File Manager' and collect relevant journal events
 End time: <...>
 
 

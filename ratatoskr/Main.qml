@@ -1,8 +1,8 @@
 /*==========================================================
  * Program : Main.qml                    Project : ratatoskr
  * Author  : Michael Zanetti, Ian L., Philippe Andersson
- * Date    : 2026-03-12
- * Version : 0.0.4
+ * Date    : 2026-04-01
+ * Version : 0.0.5
  * Notice  : (c) Original work by Michael Zanetti, Canonical
  *           Adapted by Ian L. and Philippe Andersson
  * License : GNU GPL v3 or later
@@ -14,6 +14,9 @@
  * - 2026-02-17 (0.0.2) : Changed app author name to match GitHub account.
  * - 2026-03-06 (0.0.3) : Added incoming transfer confirmation dialog.
  * - 2026-03-12 (0.0.4) : Added delete confirmation dialog (issue #5).
+ * - 2026-04-01 (0.0.5) : Wrapped transfer status strings in i18n.tr() 
+ *   (issue #20). Fixed typo "Uunknown" -> "Unknown". Changed "Completed" 
+ *   to use i18n.tr() with %1 placeholder.
  *========================================================*/
 
 import QtQuick 2.4
@@ -322,17 +325,17 @@ MainView {
                                 text: {
                                     switch (status) {
                                     case Transfer.StatusQueued:
-                                        return "Waiting...";
+                                        return i18n.tr("Waiting...");
                                     case Transfer.StatusActive:
-                                        return "Transferring...";
+                                        return i18n.tr("Transferring...");
                                     case Transfer.StatusSuspended:
-                                        return "Paused"
+                                        return i18n.tr("Paused");
                                     case Transfer.StatusComplete:
-                                        return "Completed (" + Qt.formatDateTime(date) + ")";
+                                        return i18n.tr("Completed (%1)").arg(Qt.formatDateTime(date));
                                     case Transfer.StatusError:
-                                        return "Failed";
+                                        return i18n.tr("Failed");
                                     }
-                                    return "Uunknown";
+                                    return i18n.tr("Unknown");
                                 }
                             }
                         }

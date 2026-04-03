@@ -1,6 +1,6 @@
 [Desktop Entry]
-_Name=Ratatoskr
-_Comment=Bluetooth File Transfer
+Name=Ratatoskr
+Comment=Bluetooth File Transfer
 Exec=ratatoskr %U
 Icon=assets/logo.svg
 Terminal=false
