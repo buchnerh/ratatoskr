@@ -36,20 +36,20 @@ msgstr "Dimensione: %1"
 
 #: Main.qml:58
 msgid "Accept"
-msgstr "Accettare"
+msgstr "Accetta"
 
 #: Main.qml:67
 msgid "Reject"
-msgstr "Respingere"
+msgstr "Rifiuta"
 
 #: Main.qml:86 Main.qml:202
 msgid "Delete"
-msgstr "Cancellare"
+msgstr "Elimina"
 
 #: Main.qml:87
 #, qt-format
 msgid "Are you sure you want to permanently delete '%1'?"
-msgstr "Sei sicuro di voler cancellare '%1' in modo permanente?"
+msgstr "Sei sicuro di voler eliminare '%1' in modo permanente?"
 
 #: Main.qml:90
 msgid "OK"
@@ -57,15 +57,15 @@ msgstr "OK"
 
 #: Main.qml:99
 msgid "Cancel"
-msgstr "Annullare"
+msgstr "Annulla"
 
 #: Main.qml:138 ratatoskr.desktop.in:4
 msgid "Bluetooth File Transfer"
-msgstr "File transferimento Bluetooth"
+msgstr "Trasferimento file Bluetooth"
 
 #: Main.qml:142 Main.qml:399
 msgid "Send File"
-msgstr "Inviare il file"
+msgstr "Invia file"
 
 #: Main.qml:166
 msgid "Received Files"
@@ -73,7 +73,7 @@ msgstr "File ricevuti"
 
 #: Main.qml:172
 msgid "Files sent to your Ubuntu Touch device via Bluetooth will appear below."
-msgstr "I file trasmessi al tuo dispositivo Ubuntu Touch col Bluetooth appariranno qui sotto."
+msgstr "I file inviati al tuo dispositivo Ubuntu Touch via Bluetooth appariranno qui sotto."
 
 #: Main.qml:182
 msgid "Transfers:"
@@ -81,15 +81,15 @@ msgstr "Trasferimenti:"
 
 #: Main.qml:215
 msgid "Share"
-msgstr "Condividere"
+msgstr "Condividi"
 
 #: Main.qml:226
 msgid "Save"
-msgstr "Salvare"
+msgstr "Salva"
 
 #: Main.qml:328
 msgid "Waiting..."
-msgstr "Aspettando..."
+msgstr "In attesa..."
 
 #: Main.qml:330 shareplugin/Main.qml:317
 msgid "Transferring..."
@@ -102,7 +102,7 @@ msgstr "In pausa"
 #: Main.qml:334
 #, qt-format
 msgid "Completed (%1)"
-msgstr "Compiuto (%1)"
+msgstr "Completato (%1)"
 
 #: Main.qml:336
 msgid "Failed"
@@ -118,15 +118,15 @@ msgstr "Allegato"
 
 #: Main.qml:403
 msgid "Scan"
-msgstr "Cercare"
+msgstr "Cerca"
 
 #: Main.qml:403
 msgid "Stop Scan"
-msgstr "Cancellare la ricerca"
+msgstr "Interrompi ricerca"
 
 #: Main.qml:425
 msgid "Nearby Devices"
-msgstr "Dispositivi in vicinanza"
+msgstr "Dispositivi nelle vicinanze"
 
 #: Main.qml:431
 msgid "Scanning for devices..."
@@ -134,11 +134,11 @@ msgstr "Ricerca dispositivi..."
 
 #: Main.qml:431
 msgid "Tap scan to find nearby Bluetooth devices"
-msgstr "Tocca la voce Cercare per trovare dispositivi Bluetooth in vicinanza"
+msgstr "Tocca Cerca per trovare dispositivi Bluetooth nelle vicinanze"
 
 #: Main.qml:472
 msgid "Paired"
-msgstr "Accoppiato"
+msgstr "Abbinato"
 
 #: ratatoskr.desktop.in:3
 msgid "Ratatoskr"
@@ -146,7 +146,7 @@ msgstr "Ratatoskr"
 
 #: shareplugin/Main.qml:72
 msgid "Wrong Launch Method"
-msgstr "Metodo di avviamento sbagliato"
+msgstr "Metodo di avvio errato"
 
 #: shareplugin/Main.qml:73
 msgid ""
@@ -154,17 +154,17 @@ msgid ""
 "\n"
 "Please use the Share button when viewing a file to send it via Bluetooth."
 msgstr ""
-"Questo plugin non va avviato in modo diretto dal desktop.\n"
+"Questo plugin non va avviato in modo diretto dal menu delle applicazioni.\n"
 "\n"
-"Quando visualizzi un file, utilizza il pulsante Condividere per inviarlo con Bluetooth."
+"Quando visualizzi un file, utilizza il pulsante Condividi per inviarlo via Bluetooth."
 
 #: shareplugin/Main.qml:76 shareplugin/Main.qml:329
 msgid "Close"
-msgstr "Chiudere"
+msgstr "Chiudi"
 
 #: shareplugin/Main.qml:212
 msgid "Share via Bluetooth"
-msgstr "Condividere con Bluetooth"
+msgstr "Condividi via Bluetooth"
 
 #: shareplugin/Main.qml:315
 msgid "Transfer failed."
