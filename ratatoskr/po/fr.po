@@ -154,7 +154,7 @@ msgid ""
 "\n"
 "Please use the Share button when viewing a file to send it via Bluetooth."
 msgstr ""
-"Cette extension ne peut pas être lancée directement depuis le bureau.\n"
+"Cette extension ne peut pas être lancée directement depuis le menu des applications.\n"
 "\n"
 "Veuillez utiliser le bouton Partager lorsque vous visualisez un fichier pour l'envoyer via Bluetooth."
 
