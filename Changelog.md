@@ -1,9 +1,11 @@
 # Changelog for project 'ratatoskr'
-(pan, 02/04/2026)
+(pan, 03/04/2026)
 
 
 ## v0.1.2 (*upcoming*)
 
+- Removed './docs/Roadmap.md' as its content and function have now been moved
+  to Github issues, milestones and releases.
 - Fixed buildchain to correctly populate POT file. Replaced `intltool-extract` 
   with modern two-pass `xgettext` approach. Created `po/POTFILES.in` with 
   explicit list of all translatable source files. Provided first translations
