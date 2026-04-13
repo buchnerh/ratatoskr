@@ -1,9 +1,11 @@
 # Changelog for project 'ratatoskr'
-(pan, 03/04/2026)
+(pan, 13/04/2026)
 
 
 ## v0.1.2 (*upcoming*)
 
+- Added Dutch translation contributed by Heimen Stoffels (Github 
+  [issue #29](https://github.com/petroniusniger/ratatoskr/issues/29)).
 - Removed './docs/Roadmap.md' as its content and function have now been moved
   to Github issues, milestones and releases.
 - Fixed buildchain to correctly populate POT file. Replaced `intltool-extract` 
