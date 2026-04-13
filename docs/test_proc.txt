@@ -1,6 +1,6 @@
 Ratatoskr Project Test Procedure
 ================================
-(pan, 01/04/2026)
+(pan, 13/04/2026)
 
 
 *************************************************************
@@ -48,10 +48,11 @@ b. Successful build from tag
    ~~~~~~~~~~~~~~~~~~~~~~~~~
 > Checkout latest official tag
 > Build project sources for both target arch (arm64, armhf)
+  - all provided '*.po' files are compiled to '*.gmo'                       [ ]
+  - corresponding locale folders are populated with '*.mo' files            [ ]
   - no errors or warning during build (exc. for review requirement)         [ ]
   - expected '.click' packages are produced                                 [ ]
   - version string included in package names = tag                          [ ]
-  - POT file updated, contains most recently added translatable strings     [ ]
 
 b. Fresh installation
    ~~~~~~~~~~~~~~~~~~
@@ -107,8 +108,8 @@ d. In-place upgrade
   > close OpenStore app
   - 'ratatoskr' icon shown on App Drawer                                    [ ]
   - 'BT Plugin' icon shown on App Drawer                                    [ ]
-  > start 'File Manager' app, navigate to any folder, swipe left any file, tap 
-    'Share' icon
+  > start 'File Manager' app, navigate to any folder, swipe left any supported 
+    file, tap 'Share' icon
   - 'BT Plugin' icon displayed in the "Open with" dialog                    [ ]
 > Launch main 'ratatoskr' app
   - files previously kept in the app cache are still present                [ ]
@@ -412,7 +413,7 @@ k. Test internationalization
    ~~~~~~~~~~~~~~~~~~~~~~~~~
 Start time: <...>
 > Using 'System Settings', set your phone to one of the languages supported
-  by 'ratatoskr'
+  by 'ratatoskr', confirm request to restart phone
 > Using 'System Settings', connect laptop via Bluetooth
 > Launch 'ratatoskr' app
   - app starts as expected                                                  [ ]
@@ -443,7 +444,7 @@ Start time: <...>
   > tap 'Bluetooth' icon in the upper right corner
   - 'nearby devices' page opens                                             [ ]
   - messages on the screen are expressed in the selected language           [ ]
-> Terminate 'ratatoskr', diconnect laptop, revert phone language setting and 
+> Terminate 'ratatoskr', disconnect laptop, revert phone language setting and 
   collect relevant journal events
 End time: <...>
 
@@ -618,6 +619,8 @@ End time: <...>
 g. Test internationalization
    ~~~~~~~~~~~~~~~~~~~~~~~~~
 Start time: <...>
+> Using 'System Settings', set your phone to one of the languages supported
+  by 'ratatoskr', confirm request to restart phone
 > Launch 'BT Plugin' app directly from App Drawer
   - 'Share via Bluetooth' plugin starts as expected                         [ ]
   - journal logs app version string at startup                              [ ]
@@ -627,8 +630,6 @@ Start time: <...>
   - warning text is expressed in the selected language                      [ ]
   > tap "Close" button
   - 'BT Plugin' app terminates                                              [ ]
-> Using 'System Settings', set your phone to one of the languages supported
-  by 'ratatoskr'
 > Using 'System Settings', connect laptop via Bluetooth
 > Launch 'File Manager' app, navigate to desired folder, swipe left selected
   file, tap 'Share' icon then tap 'BT Plugin' in the "Open with" dialog
@@ -651,7 +652,8 @@ Start time: <...>
   - message text is expressed in the selected language                      [ ]
   > tap "Close" button
   - 'BT Plugin' terminates, user is returned to 'File Manager'              [ ]
-> Terminate 'File Manager' and collect relevant journal events
+> Terminate 'File Manager', disconnect laptop, revert phone language setting 
+  and collect relevant journal events
 End time: <...>
 
 
