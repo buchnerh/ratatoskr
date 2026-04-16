@@ -1,9 +1,10 @@
 # Changelog for project 'ratatoskr'
-(pan, 13/04/2026)
+(pan, 16/04/2026)
 
 
-## v0.1.2 (*upcoming*)
+## v0.1.2 (Apr. 16, 2026)
 
+- Minor updates to test procedure.
 - Added Dutch translation contributed by Heimen Stoffels (Github 
   [issue #29](https://github.com/petroniusniger/ratatoskr/issues/29)).
 - Removed './docs/Roadmap.md' as its content and function have now been moved

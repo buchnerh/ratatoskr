@@ -1,5 +1,5 @@
 name: ratatoskr
-version: 0.1.1
+version: 0.1.2
 base: core24
 summary: Ratatoskr
 description: Bluetooth File Transfer
